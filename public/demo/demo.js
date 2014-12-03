@@ -27,6 +27,7 @@ var app = angular.module('MobileAngularUiExamples', [
 app.config(function($routeProvider) {
   $routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false});
   $routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false}); 
+  $routeProvider.when('/gis',           {templateUrl: 'gis.html', reloadOnSearch: false}); 
   $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
   $routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false}); 
   $routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
@@ -262,6 +263,16 @@ app.controller('MainController', function($rootScope, $scope){
   
   $scope.login = function() {
     alert('You submitted the login form');
+  };
+
+
+  var d = new Date();
+
+  $scope.GisValue = 123456;
+
+  $scope.GetGis = function() {
+	$scope.GisValue = $scope.GisValue + 1;
+    //alert('You submitted the Gis form');
   };
 
   // 
