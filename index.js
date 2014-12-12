@@ -38,3 +38,5 @@ app.get('/', function (req, res) {
           });
 });
 
+
+require('./contorller/index.js')(app);
