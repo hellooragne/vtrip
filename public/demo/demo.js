@@ -196,7 +196,7 @@ app.directive('carouselItem', function($drag) {
 // For this trivial demo we have just a unique MainController 
 // for everything
 //
-app.controller('MainController', function($rootScope, $scope, Phone){
+app.controller('MainController', function($rootScope, $scope, $http, Phone){
 
 	// User agent displayed in home page
 	$scope.userAgent = navigator.userAgent;
@@ -274,10 +274,30 @@ app.controller('MainController', function($rootScope, $scope, Phone){
 
 	$scope.GisValue = 123456;
 
+
+	var httpGet = function(position) {
+		$scope.position = "Latitude: " + position.coords.latitude +
+			  "Longitude: " + position.coords.longitude;
+		console.log("Latitude: " + position.coords.latitude +
+			  "Longitude: " + position.coords.longitude);
+
+		var rest = "/gis/subway?location=" 
+			+ position.coords.latitude
+			+ ","
+			+ position.coords.longitude 
+			+ "&radius=8000";
+		$http.get(rest).
+			success(function(data) {
+				$scope.greeting = data;
+			});
+	};
+
 	$scope.GetGis = function($a) {
-		$scope.GisValue = $scope.GisValue + 1;
-		console.log($a);
-		//alert('You submitted the Gis form');
+		//$scope.GisValue = $scope.GisValue + 1;
+		console.log("GetGis");
+
+		navigator.geolocation.getCurrentPosition(httpGet);
+		
 	};
 
 	// 
