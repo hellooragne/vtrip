@@ -11,8 +11,8 @@ module.exports = function(app) {
 	};
 	
 	app.get('/gis/subway', function (req, res) {
-		console.log(req.query);
-		var url = geturl({query:urlencode("地铁站"), location:req.query.location, radius:req.query.radius, ak:'E6928ee8e014f6b0480fea4c4489201a'});
+		var url = geturl({query:urlencode("地铁站"), location:req.query.location, 
+			radius:req.query.radius, ak:'E6928ee8e014f6b0480fea4c4489201a'});
 		console.log(url);
 
 
