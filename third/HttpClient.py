@@ -33,6 +33,13 @@ class HttpClient(object):
             print "exception"
             print e
 
+    def HttpGet(self, url, TimeOut, body='', headers={}):
+        try:
+            r = requests.get(url, headers=headers, timeout=TimeOut)
+            return r.text
+        except Exception, e:
+            print "exception"
+            print e
 
     def HttpPost(self, url, TimeOut, body='', headers={}):
         try:

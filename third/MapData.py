@@ -2,6 +2,7 @@
 
 from urllib import urlencode
 from HttpClient import HttpClient
+from VDB import VDB
 
 import json
 
@@ -41,11 +42,13 @@ class MapData(object):
                 result.append(r)
             i += 1
         print 'total = ' + str(len(result))
-        print result
+        return result
 
     def writeDb(self):
         pass
 
 if __name__ == "__main__":
     mapobj = MapData()
-    mapobj.subway()
+    result = mapobj.subway()
+    VDBobj = VDB()
+    VDBobj.Insert(result)
