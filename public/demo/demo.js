@@ -32,7 +32,7 @@ app.config(function($routeProvider) {
 	$routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false});
 	$routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false}); 
 	$routeProvider.when('/gis',           {templateUrl: 'gis.html', reloadOnSearch: false}); 
-	$routeProvider.when('/im',            {templateUrl: 'im.html', reloadOnSearch: false}); 
+	$routeProvider.when('/im/:id',        {templateUrl: 'im.html', reloadOnSearch: false, controller: 'im'}); 
 	$routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
 	$routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false}); 
 	$routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
@@ -43,6 +43,8 @@ app.config(function($routeProvider) {
 	$routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
 	$routeProvider.when('/toggleLegacy',  {templateUrl: 'toggleLegacy.html', reloadOnSearch: false});
 });
+
+
 
 //
 // `$drag` example: drag to dismiss
@@ -199,6 +201,8 @@ app.directive('carouselItem', function($drag) {
 //
 app.controller('MainController', function($rootScope, $scope, $http, Phone){
 
+	$rootScope.test = 'test1234'
+
 	// User agent displayed in home page
 	$scope.userAgent = navigator.userAgent;
 
@@ -321,3 +325,18 @@ app.controller('MainController', function($rootScope, $scope, $http, Phone){
 	console.log(Phone.user);
 });
 
+app.controller('im', ['$rootScope', '$scope', '$routeParams', 
+  function($rootScope, $scope, $routeParams) {
+
+	$scope.message = '';
+
+    $scope.phone = $routeParams.id; 
+
+    $scope.setImage = function(imageUrl) {
+      $scope.phone = imageUrl;
+    };
+
+	$scope.Send = function() {
+		console.log($scope.message);
+	};
+  }]);

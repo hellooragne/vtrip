@@ -1,5 +1,5 @@
 <div class="scrollable">  
-	<div class="scrollable-content">
+	<div class="scrollable-content section">
 
 		<div class="list-group text-center">
 			<div class="list-group-item list-group-item-home">
@@ -7,8 +7,23 @@
 					Demo <small>1.2</small>
 				</h4>
 			</div>
-			<a href="#/gis">gis</a>
 
+			<div class="list-group-item">
+				<a href="#/gis">gis</a>
+				{{test}}
+				{{phone}}
+			</div>
+			<form role="form" ng-submit='Send()'>
+				<div class="form-group">
+					<div class="col-sm-11">
+						<input type="password" class="form-control" ng-model="message" placeholder="Enter email">
+					</div>
+
+					<div class="col-sm-1">
+						<button type="submit" class="btn btn-default" ng-click='Send()'>Sign in</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
