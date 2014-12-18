@@ -18,7 +18,7 @@
 		});
 	};
 
-	im.prototype.handleOpen = function(conn) {
+	im.prototype.handleOpen = function(conn, c) {
 		var _this = this;
 		console.log('handle open');
 
@@ -45,10 +45,10 @@
 				conn.listRooms({
 					success : function(rooms) {
 						if (rooms) {
-							var listRoom = rooms;
 							for (var i in rooms) {
 								console.log("rooms is " + rooms[i].name + "   " + rooms[i].roomId);
 							}
+							c.onOpen({roster: roster, rooms: rooms});
 						}
 					},
 					error : function(e) {
@@ -59,12 +59,65 @@
 		});
 	};
 
-	im.prototype.init = function() {
+	im.prototype.groupsend = function(c) {
+		var _this = this;
+		if (c.msg == null || c.msg.length == 0) {
+			return;
+		}
+		if (c.to == null) {
+			return;
+		}
+		var options = {
+			to : c.to,
+			msg : c.msg,
+			type : "groupchat"
+		};
+		//easemobwebim-sdk发送文本消息的方法 to为发送给谁，meg为文本消息对象
+		console.log(options);
+		_this.conn.sendTextMessage(options);
+	};
+
+	im.prototype.init = function(c) {
 		var _this = this;
 		this.conn.init({
 			//当连接成功时的回调方法
 			onOpened : function() {
-				_this.handleOpen(_this.conn);
+				console.log("befare onOpen1");
+				_this.handleOpen(_this.conn, c);
+			},
+			onClosed : function() {
+				//handleClosed();
+			},
+			//收到文本消息时的回调方法
+			onTextMessage : function(message) {
+				//handleTextMessage(message);
+			},
+			//收到表情消息时的回调方法
+			onEmotionMessage : function(message) {
+				//handleEmotion(message);
+			},
+			//收到图片消息时的回调方法
+			onPictureMessage : function(message) {
+				//handlePictureMessage(message);
+			},
+			//收到音频消息的回调方法
+			onAudioMessage : function(message) {
+				//handleAudioMessage(message);
+			},
+			onLocationMessage : function(message) {
+				//handleLocationMessage(message);
+			},
+			//收到联系人订阅请求的回调方法
+			onPresence : function(message) {
+				//handlePresence(message);
+			},
+			//收到联系人信息的回调方法
+			onRoster : function(message) {
+				//handleRoster(message);
+			},
+			//异常时的回调方法
+			onError : function(message) {
+				handleError(message);
 			}
 		});
 	};
@@ -73,7 +126,7 @@
 
 	phonecatServices.factory('Phone', function() {
 		var im_new = new im();
-		im_new.init();
+		//im_new.init();
 		//im_new.open();
 		return im_new;
 	});

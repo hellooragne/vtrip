@@ -310,17 +310,32 @@ app.controller('MainController', function($rootScope, $scope, $http, Phone){
 
 	$scope.username = '';
 	$scope.password = '';
+	$rootScope.rooms = [
+
+	];
+
+	$scope.onOpen = function(r) {
+		console.log("onOpen");
+		//$scope.rooms = r.rooms;
+		window.location.href = "#/gis/";
+		for (var i in r.rooms) {
+			console.log("rooms is " + r.rooms[i].name + "   " + r.rooms[i].roomId);
+			$rootScope.rooms.push(r.rooms[i]);
+		}
+		Phone.groupsend({to:'141810209314877', msg:'12222222'});
+	};
+
 	$scope.Login = function() {
 		console.log($scope.username);
 		console.log($scope.password);
+		Phone.init({onOpen: $scope.onOpen});
 		Phone.open({username:$scope.username, password:$scope.password});
-		window.location.href = "#/gis/";
 	};
 
 });
 
-app.controller('im', ['$rootScope', '$scope', '$routeParams', 
-  function($rootScope, $scope, $routeParams) {
+app.controller('im', ['$rootScope', '$scope', '$routeParams', 'Phone',
+  function($rootScope, $scope, $routeParams, Phone) {
 
 	$scope.message = '';
 
@@ -336,6 +351,7 @@ app.controller('im', ['$rootScope', '$scope', '$routeParams',
 	$scope.Send = function() {
 		console.log($scope.message);
 		$scope.chats.push($scope.message);
+		Phone.groupsend({to:$routeParams.id, msg:$scope.message});
 		/*
 		var index = $scope.chats.indexOf("hello");
 		if (index > -1) {
