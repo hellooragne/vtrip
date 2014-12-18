@@ -9,10 +9,10 @@
 		this.conn  = new Easemob.im.Connection();
 	};
 
-	im.prototype.open = function() {
+	im.prototype.open = function(c) {
 		this.conn.open({
-			user : 'test',
-			pwd :   '123456',
+			user : c.username,
+			pwd :  c.password,
 			//连接时提供appkey
 			appKey : 'helloorange#vtrip'
 		});
@@ -74,11 +74,8 @@
 	phonecatServices.factory('Phone', function() {
 		var im_new = new im();
 		im_new.init();
-		im_new.open();
-		var data = {
-			user:im_new.data
-		};
-		return data;  
+		//im_new.open();
+		return im_new;
 	});
 
 

@@ -6,6 +6,7 @@
 
 var app = angular.module('MobileAngularUiExamples', [
 		'ngRoute',
+		'ngAnimate',
 		'mobile-angular-ui',
 
 		// touch/drag feature: this is from 'mobile-angular-ui.gestures.js'
@@ -29,7 +30,7 @@ var app = angular.module('MobileAngularUiExamples', [
 // in order to avoid unwanted routing.
 // 
 app.config(function($routeProvider) {
-	$routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false});
+	$routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false, controller: 'MainController'});
 	$routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false}); 
 	$routeProvider.when('/gis',           {templateUrl: 'gis.html', reloadOnSearch: false}); 
 	$routeProvider.when('/im/:id',        {templateUrl: 'im.html', reloadOnSearch: false, controller: 'im'}); 
@@ -246,21 +247,6 @@ app.controller('MainController', function($rootScope, $scope, $http, Phone){
 	{ name: 'Bill  Chavez', online: true },
 	{ name: 'Veronica  Maxwell', online: true },
 	{ name: 'Jessica Webster', online: true },
-	{ name: 'Jackie  Barton', online: true },
-	{ name: 'Crystal Drake', online: false },
-	{ name: 'Milton  Dean', online: false },
-	{ name: 'Joann Johnston', online: false },
-	{ name: 'Cora  Vaughn', online: false },
-	{ name: 'Nina  Briggs', online: false },
-	{ name: 'Casey Turner', online: false },
-	{ name: 'Jimmie  Wilson', online: false },
-	{ name: 'Nathaniel Steele', online: false },
-	{ name: 'Aubrey  Cole', online: false },
-	{ name: 'Donnie  Summers', online: false },
-	{ name: 'Kate  Myers', online: false },
-	{ name: 'Priscilla Hawkins', online: false },
-	{ name: 'Joe Barker', online: false },
-	{ name: 'Lee Norman', online: false },
 	{ name: 'Ebony Rice', online: false }
 	];
 
@@ -322,7 +308,15 @@ app.controller('MainController', function($rootScope, $scope, $http, Phone){
 		}
 	};
 
-	console.log(Phone.user);
+	$scope.username = '';
+	$scope.password = '';
+	$scope.Login = function() {
+		console.log($scope.username);
+		console.log($scope.password);
+		Phone.open({username:$scope.username, password:$scope.password});
+		window.location.href = "#/gis/";
+	};
+
 });
 
 app.controller('im', ['$rootScope', '$scope', '$routeParams', 
@@ -330,13 +324,26 @@ app.controller('im', ['$rootScope', '$scope', '$routeParams',
 
 	$scope.message = '';
 
+	$scope.chats = ["hello", "world"];
+
     $scope.phone = $routeParams.id; 
 
     $scope.setImage = function(imageUrl) {
       $scope.phone = imageUrl;
     };
 
+
 	$scope.Send = function() {
 		console.log($scope.message);
+		$scope.chats.push($scope.message);
+		/*
+		var index = $scope.chats.indexOf("hello");
+		if (index > -1) {
+			$scope.chats.splice(index, 1);
+		}
+		*/
+	    //var	html = '<div class="section section-break"> <i class="fa fa-{{notice.icon}}"></i>' + $scope.message + '</div>';
+		//angular.element('#helloim').append(html);
 	};
+	
   }]);

@@ -1,43 +1,32 @@
-<div class="scrollable">  
-	<div class="scrollable-content section">
-
-		<div class="list-group text-center">
-			<div class="list-group-item list-group-item-home">
+<div class="scrollable">  <div class="scrollable-content "> <div class="list-group text-left"> <div class="list-group-item list-group-item-home">
 				<h4>Mobile Angular UI
 					Demo <small>1.2</small>
 				</h4>
-			</div>
 
-			<div class="list-group-item">
-				<a href="#/gis">gis</a>
-				{{test}}
-				{{phone}}
-			</div>
 
-			<div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
-				<div class="list-group text-left">
-					<a class="list-group-item"><i class="fa fa-home fa-fw"></i>&nbsp; Home</a>
-					<a class="list-group-item"><i class="fa fa-book fa-fw"></i>&nbsp; Library</a>
-					<a class="list-group-item"><i class="fa fa-pencil fa-fw"></i>&nbsp; Applications</a>
-					<a class="list-group-item"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>
-				</div>
-				<ul class="fa-ul">
-					<li class="text-left"> <i class="fa fa-chevron-left pull-left fa-2x"></i>List icons</li>
-					<li class="text-right"><i class="fa fa-chevron-right pull-right fa-2x"></i>List icons</li>
-				</ul>
-
-			</div>
-			<form role="form" ng-submit='Send()'>
-				<div class="form-group">
-					<div class="col-sm-11">
-						<input type="password" class="form-control" ng-model="message" placeholder="Enter email">
-					</div>
-
-					<div class="col-sm-1">
-						<button type="submit" class="btn btn-default" ng-click='Send()'>Sign in</button>
+				<div class="scrollable-content" ui-scroll-bottom='bottomReached()' id="helloim">
+					<div class="list-group text-left" ng-repeat="chat in chats">
+						<a class="list-group-item"><i class="fa fa-cog fa-fw"></i>&nbsp; {{chat}}</a>
 					</div>
 				</div>
-			</form>
+
+				<form role="form">
+
+					<div class="list-group">
+						<div class="form-group">
+							<div class="col-sm-11">
+								<input type="text" class="form-control" ng-model="message" placeholder="Enter email">
+							</div>
+
+							<div class="col-sm-1">
+								<button type="submit" class="btn btn-default" ng-click='Send()'>Sign in</button>
+							</div>
+						</div>
+					</div>
+				</form>
+
+			</div>
+
 		</div>
 	</div>
 </div>
