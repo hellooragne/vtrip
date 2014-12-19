@@ -30,10 +30,10 @@ var app = angular.module('MobileAngularUiExamples', [
 // in order to avoid unwanted routing.
 // 
 app.config(function($routeProvider) {
-	$routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false, controller: 'MainController'});
-	$routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false}); 
+	$routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false, controller: "MainController"});
 	$routeProvider.when('/gis',           {templateUrl: 'gis.html', reloadOnSearch: false}); 
-	$routeProvider.when('/im/:id',        {templateUrl: 'im.html', reloadOnSearch: false, controller: 'im'}); 
+	$routeProvider.when('/im/:id',        {templateUrl: 'im.html', reloadOnSearch: false, controller: "im"}); 
+	$routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false}); 
 	$routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
 	$routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false}); 
 	$routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
@@ -200,7 +200,7 @@ app.directive('carouselItem', function($drag) {
 // For this trivial demo we have just a unique MainController 
 // for everything
 //
-app.controller('MainController', function($rootScope, $scope, $http, Phone){
+app.controller('MainController', function($rootScope, $scope, $routeParams, $http, Phone){
 
 	$rootScope.test = 'test1234'
 
@@ -325,33 +325,52 @@ app.controller('MainController', function($rootScope, $scope, $http, Phone){
 		Phone.groupsend({to:'141810209314877', msg:'12222222'});
 	};
 
+	$scope.handleTextMessage = function(message) {
+		var from = message.from;//消息的发送者
+		var mestype = message.type;//消息发送的类型是群组消息还是个人消息
+		var messageContent = message.data;//文本消息体
+		//TODO  根据消息体的to值去定位那个群组的聊天记录
+		var room = message.to;
+		console.log(mestype + "  " + messageContent);
+
+		if (mestype == 'groupchat') {
+			console.log(messageContent);
+		} else {
+
+		}
+	};
+
 	$scope.Login = function() {
 		console.log($scope.username);
 		console.log($scope.password);
-		Phone.init({onOpen: $scope.onOpen});
+		Phone.init({onOpen: $scope.onOpen, handleTextMessage: $scope.handleTextMessage});
 		Phone.open({username:$scope.username, password:$scope.password});
 	};
+
+	
 
 });
 
 app.controller('im', ['$rootScope', '$scope', '$routeParams', 'Phone',
   function($rootScope, $scope, $routeParams, Phone) {
 
+	  /*im */
+
 	$scope.message = '';
 
-	$scope.chats = ["hello", "world"];
+	$scope.chats = ['111111111', '2222222'];
 
-    $scope.phone = $routeParams.id; 
+    $scope.id = $routeParams.id; 
 
     $scope.setImage = function(imageUrl) {
       $scope.phone = imageUrl;
     };
 
-
 	$scope.Send = function() {
 		console.log($scope.message);
 		$scope.chats.push($scope.message);
 		Phone.groupsend({to:$routeParams.id, msg:$scope.message});
+		$scope.message = '';
 		/*
 		var index = $scope.chats.indexOf("hello");
 		if (index > -1) {
@@ -361,5 +380,11 @@ app.controller('im', ['$rootScope', '$scope', '$routeParams', 'Phone',
 	    //var	html = '<div class="section section-break"> <i class="fa fa-{{notice.icon}}"></i>' + $scope.message + '</div>';
 		//angular.element('#helloim').append(html);
 	};
+
+	$scope.$on('$destroy', function iVeBeenDismissed() {
+		// say goodbye to your controller here
+		console.log("goodbye im ");
+	});
+	
 	
   }]);

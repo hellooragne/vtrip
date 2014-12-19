@@ -77,6 +77,7 @@
 		_this.conn.sendTextMessage(options);
 	};
 
+
 	im.prototype.init = function(c) {
 		var _this = this;
 		this.conn.init({
@@ -90,7 +91,8 @@
 			},
 			//收到文本消息时的回调方法
 			onTextMessage : function(message) {
-				//handleTextMessage(message);
+				console.log('recv message');
+				c.handleTextMessage(message);
 			},
 			//收到表情消息时的回调方法
 			onEmotionMessage : function(message) {
@@ -117,7 +119,7 @@
 			},
 			//异常时的回调方法
 			onError : function(message) {
-				handleError(message);
+				//handleError(message);
 			}
 		});
 	};
