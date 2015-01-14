@@ -33,12 +33,12 @@ app.config(function($routeProvider) {
 	$routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false, controller: "MainController"});
 	$routeProvider.when('/gis',           {templateUrl: 'gis.html', reloadOnSearch: false}); 
 	$routeProvider.when('/im/:id',        {templateUrl: 'im.html', reloadOnSearch: false, controller: "im"}); 
-	$routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false}); 
+	$routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false, controller: "special_list"}); 
 	$routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
 	$routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false}); 
 	$routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
 	$routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false}); 
-	$routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false});
+	$routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false, controller: "MainController"});
 	$routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
 	$routeProvider.when('/drag',          {templateUrl: 'drag.html', reloadOnSearch: false});
 	$routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
@@ -196,13 +196,77 @@ app.directive('carouselItem', function($drag) {
 });
 
 
+var special_off = function() {
+
+};
+
+special_off.prototype.init = function($rootScope, $scope, $routeParams, $http, Phone) {
+	console.log('special off ');
+	$scope.special_Name = '';
+	$scope.special_Type = '';
+	$scope.special_Time = '';
+	$scope.special_Price = '';
+	$scope.special_StartTime = '';
+	$scope.special_EndTime = '';
+	$scope.special_StartCity = '';
+	$scope.special_EndCity = '';
+	$scope.special_Url = '';
+	$scope.special_Content = '';
+
+
+	$scope.SpeicalAddOffer = function() {
+		
+		$rootScope.loading = true;
+
+		json = {
+			"name":$scope.special_Name,
+			"type":$scope.special_Type,
+			"time":$scope.special_Time,
+			"price":$scope.special_Price,
+			"start_time":$scope.special_StartTime,
+			"end_time":$scope.special_EndTime,
+			"start_city":$scope.special_StartCity,
+			"end_city":$scope.special_EndCity,
+			"url":$scope.special_Url,
+			"content":$scope.special_Content,
+		};
+
+		var rest = encodeURI("/special_offer/add?json=" + JSON.stringify(json));
+
+		$http.get(rest).
+			success(function(data) {
+				$rootScope.loading = false;
+			});
+
+		$scope.special_Name = '';
+		$scope.special_Type = '';
+		$scope.special_Time = '';
+		$scope.special_StartTime = '';
+		$scope.special_EndTime = '';
+		$scope.special_StartCity = '';
+		$scope.special_EndCity = '';
+		$scope.special_Url = '';
+		$scope.special_Content = '';
+
+		window.location.href = "#/forms/";
+	};
+
+	
+};
+
+
+
 //
 // For this trivial demo we have just a unique MainController 
 // for everything
 //
 app.controller('MainController', function($rootScope, $scope, $routeParams, $http, Phone){
 
-	$rootScope.test = 'test1234'
+	$scope.Name = 'hello';
+
+	$scope.title = '质量管理';
+
+	$rootScope.test = 'test1234';
 
 	// User agent displayed in home page
 	$scope.userAgent = navigator.userAgent;
@@ -216,12 +280,17 @@ app.controller('MainController', function($rootScope, $scope, $routeParams, $htt
 		$rootScope.loading = false;
 	});
 
+
+	var special_off_m = new special_off();
+	special_off_m.init($rootScope, $scope, $routeParams, $http, Phone);
+
 	// Fake text i used here and there.
 	$scope.lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel explicabo, aliquid eaque soluta nihil eligendi adipisci error, illum corrupti nam fuga omnis quod quaerat mollitia expedita impedit dolores ipsam. Obcaecati.';
 
 	// 
 	// 'Scroll' screen
 	// 
+	/*
 	var scrollItems = [];
 
 	for (var i=1; i<=100; i++) {
@@ -233,6 +302,8 @@ app.controller('MainController', function($rootScope, $scope, $routeParams, $htt
 	$scope.bottomReached = function() {
 		alert('Congrats you scrolled to the end of the list!');
 	}
+
+	*/
 
 	// 
 	// Right Sidebar
@@ -386,5 +457,30 @@ app.controller('im', ['$rootScope', '$scope', '$routeParams', 'Phone',
 		console.log("goodbye im ");
 	});
 	
+	
+  }]);
+
+
+
+app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http', 'Phone',
+  function($rootScope, $scope, $routeParams, $http, Phone) {
+	
+	/*special list */
+
+	$scope.special_offer_list = [];
+
+	json = {"limit":20,"skip":0};
+
+	var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+
+	$http.get(rest).
+		success(function(data) {
+			$scope.special_offer_list = data;
+		});
+
+	$scope.$on('$destroy', function iVeBeenDismissed() {
+		// say goodbye to your controller here
+		console.log("goodbye special list");
+	});
 	
   }]);
