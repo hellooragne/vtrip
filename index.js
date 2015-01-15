@@ -6,7 +6,7 @@ var app = require('express')()
 var express = require('express');
 
 io.set('log level', 1); 
-server.listen(8081);
+server.listen(80);
 
 app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/views');

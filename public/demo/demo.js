@@ -31,18 +31,11 @@ var app = angular.module('MobileAngularUiExamples', [
 // 
 app.config(function($routeProvider) {
 	$routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false, controller: "MainController"});
-	$routeProvider.when('/gis',           {templateUrl: 'gis.html', reloadOnSearch: false}); 
 	$routeProvider.when('/im/:id',        {templateUrl: 'im.html', reloadOnSearch: false, controller: "im"}); 
 	$routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false, controller: "special_list"}); 
-	$routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
 	$routeProvider.when('/tabs/:id',      {templateUrl: 'tabs.html', reloadOnSearch: false, controller: "special_detail"}); 
-	$routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
-	$routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false}); 
 	$routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false, controller: "MainController"});
-	$routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
 	$routeProvider.when('/drag',          {templateUrl: 'drag.html', reloadOnSearch: false});
-	$routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
-	$routeProvider.when('/toggleLegacy',  {templateUrl: 'toggleLegacy.html', reloadOnSearch: false});
 });
 
 
@@ -268,7 +261,7 @@ app.controller('MainController', function($rootScope, $scope, $routeParams, $htt
 
 	$scope.Name = 'hello';
 
-	$scope.title = '质量管理';
+	$scope.title = '携程内部特价';
 
 	$rootScope.test = 'test1234';
 
