@@ -9,42 +9,28 @@
 
       <ul class="nav nav-tabs">
         <li ui-class="{'active': activeTab == 1}">
-          <a ui-set="{'activeTab': 1}">Tab 1</a>
+          <a ui-set="{'activeTab': 1}">简介</a>
         </li>
         <li ui-class="{'active': activeTab == 2}">
-          <a ui-set="{'activeTab': 2}">Tab 2</a>
-        </li>
-        <li ui-class="{'active': activeTab == 3}">
-          <a ui-set="{'activeTab': 3}">Tab 3</a>
+          <a ui-set="{'activeTab': 2}">详情</a>
         </li>
       </ul>
 
       <div ui-if="activeTab == 1">
-        <h3 class="page-header">Tab 1</h3>
-        <p>{{lorem}}</p>
+        <h3 class="page-header">{{special_offer_detail.name}}</h3>
+		<pre class="">
+        <p>{{special_offer_detail.content}}</p>
+		</pre>
       </div>
 
-      <div ui-if="activeTab == 2">
-        <h3 class="page-header">Tab 2</h3>
-        <p>{{lorem}}</p>
+      <div ui-if="activeTab == 2" class="iframe-show">
+		<iframe ng-src="{{special_offer_detail.showurl}}" frameBorder=0 scrolling=yes width="100%" height="100%"></iframe>
       </div>
-
-      <div ui-if="activeTab == 3">
-        <h3 class="page-header">Tab 3</h3>
-        <p>{{lorem}}</p>
-      </div>
-
-      <div class="btn-group justified nav-tabs">
-        <a ui-set="{'activeTab': 1}" 
-            ui-class="{'active': activeTab == 1}" class="btn btn-default">Tab 1</a>
-
-        <a ui-set="{'activeTab': 2}" 
-            ui-class="{'active': activeTab == 2}" class="btn btn-default">Tab 2</a>
-
-        <a ui-set="{'activeTab': 3}" 
-            ui-class="{'active': activeTab == 3}" class="btn btn-default">Tab 3</a>
-      </div>  
     </div>
-
+	
+	<a class="btn btn-block btn-lg btn-primary scrollable-footer" href="{{special_offer_detail.jumpurl}}">
+    <i class="fa fa-heart-o"></i>
+    <span>去看看</span>
+	</a>
   </div>
 </div>

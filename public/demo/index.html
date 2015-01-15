@@ -49,9 +49,6 @@
             ui-track-as-search-param='true'
             class="sidebar sidebar-left"></div>
 
-    <div ng-include="'sidebarRight.html'" 
-            class="sidebar sidebar-right"></div>
-
     <div class="app">
 
       <!-- Navbars -->
@@ -63,11 +60,6 @@
         <div class="btn-group pull-left">
           <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
             <i class="fa fa-bars"></i> Menu
-          </div>
-        </div>
-        <div class="btn-group pull-right" ui-yield-to="navbarAction">
-          <div ui-toggle="uiSidebarRight" class="btn">
-            <i class="fa fa-comment"></i> Chat
           </div>
         </div>
       </div>

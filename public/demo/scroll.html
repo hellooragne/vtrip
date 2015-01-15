@@ -10,17 +10,27 @@
     placeholder="Search.." />
 
   <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
-    <div class="list-group">
-      <a ng-repeat="item in special_offer_list" href="#" class="list-group-item">
-        {{ item.name }} <i class="fa fa-chevron-right pull-right"></i>
-      </a>
-    </div>
+	<a class="list-group-item media" href="#/tabs/{{item._id}}" ng-repeat="item in special_offer_list">
+              <div class="pull-left">
+                  <i class="fa fa-car chat-user-avatar"></i>
+              </div>
+              <div class="media-body">
+                  <h4 class="media-heading">{{item.name}}</h4>
+                  <big ng-switch on="user.online">
+                      <span ng-switch-default>
+						  <span class="label label-success">出发:{{item.start_city}}
+                          </span>
+						  &nbsp &nbsp 
+						  <span class="label label-info">出发时间:{{item.start_time}}
+                          </span>
+						  &nbsp &nbsp 
+						  <span class="label label-success">价格:{{item.price}}
+                          </span>
+                      </span>
+                  </big>
+              </div>
+          </a>
   </div>
 
-  <a class="btn btn-block btn-lg btn-primary scrollable-footer" ui-toggle='searchBar'>
-    <i class="fa fa-search"></i> 
-    <span ui-hide="searchBar">Show</span>
-    <span ui-show="searchBar">Hide</span>
-    Search Bar
-  </a>
+  
 </div>

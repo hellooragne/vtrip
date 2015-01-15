@@ -35,7 +35,7 @@ app.config(function($routeProvider) {
 	$routeProvider.when('/im/:id',        {templateUrl: 'im.html', reloadOnSearch: false, controller: "im"}); 
 	$routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false, controller: "special_list"}); 
 	$routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
-	$routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false}); 
+	$routeProvider.when('/tabs/:id',      {templateUrl: 'tabs.html', reloadOnSearch: false, controller: "special_detail"}); 
 	$routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
 	$routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false}); 
 	$routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false, controller: "MainController"});
@@ -203,14 +203,15 @@ var special_off = function() {
 special_off.prototype.init = function($rootScope, $scope, $routeParams, $http, Phone) {
 	console.log('special off ');
 	$scope.special_Name = '';
-	$scope.special_Type = '';
+	$scope.special_Id = '';
+	$scope.special_Type = 'travelling';
 	$scope.special_Time = '';
 	$scope.special_Price = '';
 	$scope.special_StartTime = '';
 	$scope.special_EndTime = '';
 	$scope.special_StartCity = '';
 	$scope.special_EndCity = '';
-	$scope.special_Url = '';
+	$scope.special_Jumpurl = '';
 	$scope.special_Content = '';
 
 
@@ -220,6 +221,7 @@ special_off.prototype.init = function($rootScope, $scope, $routeParams, $http, P
 
 		json = {
 			"name":$scope.special_Name,
+			"id":$scope.special_Id,
 			"type":$scope.special_Type,
 			"time":$scope.special_Time,
 			"price":$scope.special_Price,
@@ -227,7 +229,7 @@ special_off.prototype.init = function($rootScope, $scope, $routeParams, $http, P
 			"end_time":$scope.special_EndTime,
 			"start_city":$scope.special_StartCity,
 			"end_city":$scope.special_EndCity,
-			"url":$scope.special_Url,
+			"jumpurl":$scope.special_Jumpurl,
 			"content":$scope.special_Content,
 		};
 
@@ -239,13 +241,15 @@ special_off.prototype.init = function($rootScope, $scope, $routeParams, $http, P
 			});
 
 		$scope.special_Name = '';
-		$scope.special_Type = '';
+		$scope.special_Id = '';
+		$scope.special_Type = 'travelling';
 		$scope.special_Time = '';
+		$scope.special_Price = '';
 		$scope.special_StartTime = '';
 		$scope.special_EndTime = '';
 		$scope.special_StartCity = '';
 		$scope.special_EndCity = '';
-		$scope.special_Url = '';
+		$scope.special_Jumpurl = '';
 		$scope.special_Content = '';
 
 		window.location.href = "#/forms/";
@@ -476,6 +480,33 @@ app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http',
 	$http.get(rest).
 		success(function(data) {
 			$scope.special_offer_list = data;
+		});
+
+	$scope.$on('$destroy', function iVeBeenDismissed() {
+		// say goodbye to your controller here
+		console.log("goodbye special list");
+	});
+	
+  }]);
+
+
+
+app.controller('special_detail', ['$rootScope', '$scope', '$routeParams', '$http', '$sce', 'Phone',
+  function($rootScope, $scope, $routeParams, $http, $sce, Phone) {
+	
+	/*special list */
+
+
+	json = {"limit":20,"skip":0};
+	json['_id'] = $routeParams.id; 
+
+	var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+
+	$http.get(rest).
+		success(function(data) {
+			$scope.special_offer_detail = data[0];
+			$scope.special_offer_detail['showurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['showurl']);
+			console.log(data[0]);
 		});
 
 	$scope.$on('$destroy', function iVeBeenDismissed() {
