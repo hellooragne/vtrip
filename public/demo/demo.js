@@ -216,7 +216,7 @@ special_off.prototype.init = function($rootScope, $scope, $routeParams, $http, P
 			"name":$scope.special_Name,
 			"id":$scope.special_Id,
 			"type":$scope.special_Type,
-			"time":$scope.special_Time,
+			"time":new Date(),
 			"price":$scope.special_Price,
 			"start_time":$scope.special_StartTime,
 			"end_time":$scope.special_EndTime,
