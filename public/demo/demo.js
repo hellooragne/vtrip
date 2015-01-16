@@ -465,15 +465,36 @@ app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http',
 	/*special list */
 
 	$scope.special_offer_list = [];
+	$scope.skip = 0;
 
-	json = {"limit":40,"skip":0};
 
-	var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+	var httpget = function (){
 
-	$http.get(rest).
-		success(function(data) {
+		$rootScope.loading = true;
+
+		json = {"limit":10,"skip":$scope.skip};
+
+		var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+
+		$http.get(rest).success(function(data) {
+
 			$scope.special_offer_list = data;
+			$scope.special_offer_list.push(data);
+			if (data.length != 0) {
+				$scope.skip += 1;
+			}
+
+			$rootScope.loading = false;
 		});
+	}
+
+	httpget();
+
+	$scope.bottomReached = function() {
+		console.log('Congrats you scrolled to the end of the list!');
+
+		httpget();
+	}
 
 	$scope.$on('$destroy', function iVeBeenDismissed() {
 		// say goodbye to your controller here
