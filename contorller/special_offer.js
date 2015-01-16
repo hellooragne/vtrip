@@ -5,10 +5,16 @@ sprintf = require('sprintf').sprintf;
 module.exports = function(app) {
 
 	var special_offer_Db = require('../model/special_offer_db');
+	var vcity = require('../model/vcity')
 
 	var trans_url = function(data) {
+
+		var vcity_detail = vcity.search(data.start_city);
+
 		if (data.id != '') {
-			data.showurl = sprintf("http://m.ctrip.com/webapp/tour/detail?productId=%s&saleCityId=2&departCityId=0&from=vacations", data.id);
+			data.showurl = sprintf("http://m.ctrip.com/webapp/tour/detail?productId=%s&saleCityId=%s&departCityId=0&from=vacations"
+					, data.id, vcity_detail.City);
+
 		}
 
 		if (data.jumpurl != '') {

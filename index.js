@@ -31,12 +31,11 @@ app.all('*', function(req, res, next) {
 });
 */
 
+
+require('./contorller/index.js')(app);
+
 app.get('/', function (req, res) {
-    res.render('index', {
-            title: "EJS example",
-            header: "Some users"
-          });
+	res.redirect('/demo');
 });
 
 
-require('./contorller/index.js')(app);

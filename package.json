@@ -25,6 +25,7 @@
 	"mongodb":"",
 	"socket.io":"",
 	"ejs":"",
-	"sprintf":""
+	"sprintf":"",
+	"xml2js":""
   }
 }
