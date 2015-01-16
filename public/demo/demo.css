@@ -160,4 +160,5 @@ input.scrollable-header {
 
 .iframe-show {
   height: 600px;
+  scrolling:yes
 }
