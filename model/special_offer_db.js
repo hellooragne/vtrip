@@ -15,7 +15,7 @@ var special_offer_db = {
 		if (req["_id"] != null) {
 			req["_id"] = collection["bson"].ObjectID(req["_id"]);
 		}
-		collection['special_offer'].find(req).limit(l).skip(s).toArray(function(err, docs) {
+		collection['special_offer'].find(req).limit(l).sort({"_id":-1}).skip(s).toArray(function(err, docs) {
 			get_cb(docs);
 		});
 	},

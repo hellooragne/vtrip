@@ -466,7 +466,7 @@ app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http',
 
 	$scope.special_offer_list = [];
 
-	json = {"limit":20,"skip":0};
+	json = {"limit":40,"skip":0};
 
 	var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
 
