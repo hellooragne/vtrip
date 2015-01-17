@@ -524,6 +524,7 @@ app.controller('special_detail', ['$rootScope', '$scope', '$routeParams', '$http
 		success(function(data) {
 			$scope.special_offer_detail = data[0];
 			$scope.special_offer_detail['showurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['showurl']);
+			$scope.special_offer_detail['jumpurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['jumpurl']);
 			console.log(data[0]);
 		});
 
