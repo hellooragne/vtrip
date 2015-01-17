@@ -3,12 +3,6 @@
 </div>
 
 <div class="scrollable" ui-state="searchBar">
-  <input
-    ng-if="Ui.active('searchBar')"
-    type="search"
-    class="form-control scrollable-header"
-    placeholder="Search.." />
-
   <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
 	<a class="list-group-item media" href="#/tabs/{{item._id}}" ng-repeat="item in special_offer_list">
               <div class="pull-left">
@@ -16,18 +10,18 @@
               </div>
               <div class="media-body">
                   <h4 class="media-heading">{{item.name}}</h4>
-                  <big ng-switch on="user.online">
+                  <small ng-switch on="user.online">
                       <span ng-switch-default>
-						  <span class="label label-success">出发:{{item.start_city}}
+						  <span class="label label-success">{{item.start_city}}
                           </span>
 						  &nbsp &nbsp 
-						  <span class="label label-info">出发时间:{{item.start_time}}
+						  <span class="label label-info">{{item.start_time}}
                           </span>
 						  &nbsp &nbsp 
-						  <span class="label label-success">价格:{{item.price}}
+						  <span class="label label-success">￥{{item.price}}
                           </span>
                       </span>
-                  </big>
+                  </small>
               </div>
           </a>
   </div>

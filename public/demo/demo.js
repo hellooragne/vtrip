@@ -466,26 +466,30 @@ app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http',
 
 	$scope.special_offer_list = [];
 	$scope.skip = 0;
+	$scope.end = false;
 
 
 	var httpget = function (){
+		if ($scope.end == false) {
 
-		$rootScope.loading = true;
+			$rootScope.loading = true;
+			json = {"limit":20,"skip":$scope.skip};
+			var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
 
-		json = {"limit":10,"skip":$scope.skip};
+			$http.get(rest).success(function(data) {
 
-		var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+				for (i in data) {
+					$scope.special_offer_list.push(data[i]);
+				}
+				if (data.length != 0) {
+					$scope.skip += data.length;
+				} else {
+					$scope.end = true;
+				}
 
-		$http.get(rest).success(function(data) {
-
-			$scope.special_offer_list = data;
-			$scope.special_offer_list.push(data);
-			if (data.length != 0) {
-				$scope.skip += 1;
-			}
-
-			$rootScope.loading = false;
-		});
+				$rootScope.loading = false;
+			});
+		}
 	}
 
 	httpget();
