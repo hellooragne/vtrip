@@ -134,4 +134,58 @@
 	});
 
 
+	var SpecialList = function() {
+		this.skip = 0;
+		this.special_offer_list = [];
+		this.top = 0;
+	};
+
+	SpecialList.prototype.init = function() {
+		var _this = this;
+	};
+
+	SpecialList.prototype.httpget = function ($http, end, special_offer_l, c1) {
+		var _this = this;
+		if (end == false) {
+
+			var json = {"limit":20,"skip":_this.skip};
+			var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+
+			$http.get(rest).success(function(data) {
+
+				for (var i in data) {
+					_this.special_offer_list.push(data[i]);
+				}
+				if (data.length != 0) {
+					_this.skip += data.length;
+				} else {
+					end = true;
+				}
+
+				for (var i in _this.special_offer_list) {
+					special_offer_l.push(_this.special_offer_list[i]);
+				}
+
+				c1();
+			});
+		}
+	};
+
+	SpecialList.prototype.SetTop = function (top) {
+		var _this = this;
+		_this.top = top;
+
+		console.log("this top " + _this.top);
+	};
+
+	SpecialList.prototype.GetTop = function () {
+		var _this = this;
+		return _this.top;
+	};
+
+	phonecatServices.factory('SpecialListService', function() {
+		var SpecialListNew = new SpecialList();
+		return SpecialListNew;
+	});
+
 }());

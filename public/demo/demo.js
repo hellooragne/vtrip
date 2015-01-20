@@ -3,6 +3,12 @@
 // has dependent on mobile-angular-ui
 // 
 
+window.onpopstate = function(event){
+	if(event && event.state){
+		document.title = event.state.title;
+		document.body.innerHTML = event.state.html;
+	}
+}
 
 var app = angular.module('MobileAngularUiExamples', [
 		'ngRoute',
@@ -20,6 +26,8 @@ var app = angular.module('MobileAngularUiExamples', [
 		// If you're migrating from Mobile Angular UI 1.1 and you are using 
 		// 'mobile-angular-ui.migrate.js' you have to require it too
 		'mobile-angular-ui.migrate',
+
+		'duScroll',
 
   		'phonecatServices'
 		]);
@@ -194,7 +202,6 @@ var special_off = function() {
 };
 
 special_off.prototype.init = function($rootScope, $scope, $routeParams, $http, Phone) {
-	console.log('special off ');
 	$scope.special_Name = '';
 	$scope.special_Id = '';
 	$scope.special_Type = 'travelling';
@@ -459,8 +466,8 @@ app.controller('im', ['$rootScope', '$scope', '$routeParams', 'Phone',
 
 
 
-app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http', 'Phone',
-  function($rootScope, $scope, $routeParams, $http, Phone) {
+app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http', '$document', 'Phone', 'SpecialListService',
+  function($rootScope, $scope, $routeParams, $http, $document, Phone, SpecialListService) {
 	
 	/*special list */
 
@@ -469,40 +476,30 @@ app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http',
 	$scope.end = false;
 
 
-	var httpget = function (){
-		if ($scope.end == false) {
+	var c1 = function() {
+		//$("#ScrollTop").scrollTop(SpecialListService.GetTop());
+		//$document.scrollTop(SpecialListService.GetTop(),1000);
+		//$document.getElementById("ScrollTop").scrollTop(SpecialListService.GetTop(), 1000);
+	};
 
-			$rootScope.loading = true;
-			json = {"limit":20,"skip":$scope.skip};
-			var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
-
-			$http.get(rest).success(function(data) {
-
-				for (i in data) {
-					$scope.special_offer_list.push(data[i]);
-				}
-				if (data.length != 0) {
-					$scope.skip += data.length;
-				} else {
-					$scope.end = true;
-				}
-
-				$rootScope.loading = false;
-			});
-		}
-	}
-
-	httpget();
+	SpecialListService.httpget($http, $scope.end, $scope.special_offer_list, c1);
 
 	$scope.bottomReached = function() {
 		console.log('Congrats you scrolled to the end of the list!');
+		//httpget();
+	};
 
-		httpget();
-	}
+	$scope.ClickOn = function(url) {
+		console.log(url);
+		history.pushState(null, '', '#/tabs/' + url);
+	};
 
 	$scope.$on('$destroy', function iVeBeenDismissed() {
 		// say goodbye to your controller here
 		console.log("goodbye special list");
+		
+		//SpecialListService.SetTop(document.getElementById("ScrollTop").scrollTop);
+
 	});
 	
   }]);
@@ -513,8 +510,6 @@ app.controller('special_detail', ['$rootScope', '$scope', '$routeParams', '$http
   function($rootScope, $scope, $routeParams, $http, $sce, Phone) {
 	
 	/*special list */
-
-
 	json = {"limit":20,"skip":0};
 	json['_id'] = $routeParams.id; 
 

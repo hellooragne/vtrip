@@ -3,8 +3,8 @@
 </div>
 
 <div class="scrollable" ui-state="searchBar">
-  <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
-	<a class="list-group-item media" href="#/tabs/{{item._id}}" ng-repeat="item in special_offer_list">
+  <div class="scrollable-content" ui-scroll-bottom='bottomReached()' id="ScrollTop">
+	<a class="list-group-item media" ng-click="ClickOn(item._id)" ng-repeat="item in special_offer_list">
               <div class="pull-left">
                   <i class="fa fa-car chat-user-avatar"></i>
               </div>
