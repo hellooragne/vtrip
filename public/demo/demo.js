@@ -226,7 +226,7 @@ special_off.prototype.init = function($rootScope, $scope, $routeParams, $http, P
 			"content":$scope.special_Content,
 		};
 
-		var rest = encodeURI("/special_offer/add?json=" + JSON.stringify(json));
+		var rest = "/special_offer/add?json=" + encodeURIComponent(JSON.stringify(json));
 
 		$http.get(rest).
 			success(function(data) {

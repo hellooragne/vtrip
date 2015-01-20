@@ -35,7 +35,7 @@ app.all('*', function(req, res, next) {
 require('./contorller/index.js')(app);
 
 app.get('/', function (req, res) {
-	res.redirect('/demo');
+	res.redirect('/demo/#/scroll');
 });
 
 
