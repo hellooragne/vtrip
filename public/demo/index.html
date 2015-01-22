@@ -65,6 +65,13 @@
             <i class="fa fa-bars"></i> Menu
           </div>
         </div>
+		
+		<div class="btn-group pull-right" ui-yield-to="navbarAction">
+          <div ng-click="BackOn()" class="btn" ng-show="BackShow">
+            <i class="fa fa-chevron-left"></i> 返回
+          </div>
+        </div>
+
       </div>
 
       <div class="navbar navbar-app navbar-absolute-bottom">

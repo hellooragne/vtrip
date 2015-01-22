@@ -461,37 +461,58 @@ app.controller('im', ['$rootScope', '$scope', '$routeParams', 'Phone',
 		console.log("goodbye im ");
 	});
 	
-	
   }]);
 
 
 
-app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http', '$document', 'Phone', 'SpecialListService',
-  function($rootScope, $scope, $routeParams, $http, $document, Phone, SpecialListService) {
+app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http', '$document', '$sce', 'Phone', 'SpecialListService',
+  function($rootScope, $scope, $routeParams, $http, $document, $sce, Phone, SpecialListService) {
 	
 	/*special list */
 
 	$scope.special_offer_list = [];
 	$scope.skip = 0;
 	$scope.end = false;
+	$scope.scroll_show = false;
 
+	SpecialListService.httpget($http, $scope.end, $scope.special_offer_list, function() {
 
-	var c1 = function() {
-		//$("#ScrollTop").scrollTop(SpecialListService.GetTop());
-		//$document.scrollTop(SpecialListService.GetTop(),1000);
-		//$document.getElementById("ScrollTop").scrollTop(SpecialListService.GetTop(), 1000);
-	};
-
-	SpecialListService.httpget($http, $scope.end, $scope.special_offer_list, c1);
+	});
 
 	$scope.bottomReached = function() {
 		console.log('Congrats you scrolled to the end of the list!');
 		//httpget();
 	};
 
+	var detail_process = function(id, cb) {
+
+		/*special list */
+		json = {"limit":20,"skip":0};
+		json['_id'] = id; 
+
+		var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+
+		$http.get(rest).
+			success(function(data) {
+				$scope.special_offer_detail = data[0];
+				$scope.special_offer_detail['showurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['showurl']);
+				$scope.special_offer_detail['jumpurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['jumpurl']);
+				console.log(data[0]);
+				cb();
+			});
+	};
+
 	$scope.ClickOn = function(url) {
-		console.log(url);
-		history.pushState(null, '', '#/tabs/' + url);
+		detail_process(url, function() {
+			$scope.scroll_show = true;
+			$rootScope.BackShow = true;
+		});
+	};
+
+	$rootScope.BackOn = function() {
+		console.log('backOn');
+		$scope.scroll_show =  false;
+		$rootScope.BackShow = false;
 	};
 
 	$scope.$on('$destroy', function iVeBeenDismissed() {
