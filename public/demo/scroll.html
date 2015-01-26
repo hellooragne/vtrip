@@ -9,7 +9,7 @@
                   <i class="fa fa-car chat-user-avatar"></i>
               </div>
               <div class="media-body">
-                  <h4 class="media-heading">{{item.name}}</h4>
+                  <h5 class="media-heading">{{item.name}}</h5>
                   <small ng-switch on="user.online">
                       <span ng-switch-default>
 						  <span class="label label-success">{{item.start_city}}
@@ -24,6 +24,11 @@
                   </small>
               </div>
           </a>
+	<a class="list-group-item media" ng-click="showMore()">
+		<div class="media-body">
+			<h4 class="media-heading">showMore</h4>
+		</div>
+	</a>
   </div>
 </div>
 
@@ -34,7 +39,7 @@
 
       <ul class="nav nav-tabs">
         <li ui-class="{'active': activeTab == 1}">
-          <a ui-set="{'activeTab': 1}">简介</a>
+          <a ui-set="{'activeTab': 1}" id="a_first">简介</a>
         </li>
         <li ui-class="{'active': activeTab == 2}">
           <a ui-set="{'activeTab': 2}">详情</a>

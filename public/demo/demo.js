@@ -465,8 +465,8 @@ app.controller('im', ['$rootScope', '$scope', '$routeParams', 'Phone',
 
 
 
-app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http', '$document', '$sce', 'Phone', 'SpecialListService',
-  function($rootScope, $scope, $routeParams, $http, $document, $sce, Phone, SpecialListService) {
+app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http', '$document', '$sce', 'Phone', 'SpecialListService', 'SharedState',
+  function($rootScope, $scope, $routeParams, $http, $document, $sce, Phone, SpecialListService, SharedState) {
 	
 	/*special list */
 
@@ -513,6 +513,10 @@ app.controller('special_list', ['$rootScope', '$scope', '$routeParams', '$http',
 		console.log('backOn');
 		$scope.scroll_show =  false;
 		$rootScope.BackShow = false;
+
+		SharedState.set( "activeTab", 1);
+
+		//angular.element("a_first").trigger(jQuery.Event("click"));
 	};
 
 	$scope.$on('$destroy', function iVeBeenDismissed() {
