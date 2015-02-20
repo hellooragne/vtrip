@@ -1,0 +1,29 @@
+<ion-view view-title="Playlists">
+  <div class="bar bar-header bar-positive">
+	    <h1 class="title">bar-positive</h1>
+	</div>
+  <ion-content>
+  <!--
+    <ion-list>
+      <ion-item ng-repeat="playlist in special_offer_list" href="#/app/playlists/{{playlist._id}}">
+        {{playlist.name}}
+      </ion-item>
+    </ion-list>
+	-->
+
+  <div class="list">
+	  <a class="item item-thumbnail-left" href="#/app/playlists/{{item._id}}" ng-repeat="item in special_offer_list">
+		  <h2>{{item.name}}</h2>
+
+		  <span class="label label-success">{{item.start_city}}
+          </span>
+		   &nbsp &nbsp 
+		  <span class="label label-info">{{item.start_time}}
+          </span>
+		  &nbsp &nbsp 
+		  <span class="label label-success">￥{{item.price}}
+
+	  </a>
+  </div>
+  </ion-content>
+</ion-view>
