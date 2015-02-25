@@ -13,7 +13,11 @@
 
   <div class="list">
 	  <a class="item item-thumbnail-left" href="#/app/playlists/{{item._id}}" ng-repeat="item in special_offer_list">
+		  <!--
 		  <img src="http://images4.c-ctrip.com/target/hotel/20000/19562/5e6f3da6768544a985dd76df348b14e6.jpg">
+			-->
+
+		  <img src="{{item.crawl.pricture[1]}}" wight="80px" height="70px">
 
 		  <h2>{{item.name}}</h2>
 
@@ -23,7 +27,7 @@
 			{{item.start_time}}
           </p>
 		  <p>￥{{item.price}}</p>
-
+			
 	  </a>
   </div>
   </ion-content>
