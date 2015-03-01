@@ -138,20 +138,42 @@ angular.module('starter.services', [])
 
 					for (var i in data) {
 						_this.special_offer_list.push(data[i]);
+						special_offer_l.push(data[i]);
 					}
 					if (data.length != 0) {
 						_this.skip += data.length;
 					} else {
 						end = true;
 					}
-
+					/*
 					for (var i in _this.special_offer_list) {
 						special_offer_l.push(_this.special_offer_list[i]);
 					}
+					*/
 
 					c1();
 				});
 			}
+		},
+
+		GetOne : function($http, id, cb) {
+			var _this = this;
+			for (x in _this.special_offer_list) {
+				if (x['_id'] == id) {
+					cb(x);
+					return;
+				}
+			}
+	
+			json = {"limit":20,"skip":0};
+			json['_id'] = id; 
+
+			var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+
+			$http.get(rest).
+				success(function(data) {
+					cb(data[0])
+				});	
 		},
 
 		SetTop : function (top) {

@@ -1,1 +1,5 @@
 /* Empty. Add your own CSS if you like */
+.iframe-issue {
+	-webkit-overflow-scrolling: touch !important;
+	overflow: scroll !important;
+}

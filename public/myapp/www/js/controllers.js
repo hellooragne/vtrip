@@ -45,6 +45,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+
 })
 
 .controller('special_list', 
@@ -54,32 +55,92 @@ angular.module('starter.controllers', [])
 	$scope.skip = 0;
 	$scope.end = false;
 	$scope.scroll_show = false;
+	$scope.button_name = 'ShowMore';
 
 	SpecialListService.httpget($http, $scope.end, $scope.special_offer_list, function() {
 
 	});
 
+	$scope.showmore = function() {
+		console.log('show more button');
+		if ($scope.end == false) {
+			SpecialListService.httpget($http, $scope.end, $scope.special_offer_list, function() {
+
+			});
+		} else {
+
+		}
+	};
+
 })
 
-.controller('special_detail', function($rootScope, $scope, $stateParams, $http, $sce) {
+.controller('special_detail', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService) {
 	
 	/*special list */
-	json = {"limit":20,"skip":0};
+	/*
 	json['_id'] = $stateParams.id; 
+	
+	json = {"limit":20,"skip":0};
 
 	var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+	$scope.a = 1;
 
 	$http.get(rest).
 		success(function(data) {
 			$scope.special_offer_detail = data[0];
 			$scope.special_offer_detail['showurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['showurl']);
 			$scope.special_offer_detail['jumpurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['jumpurl']);
+				
+
 			console.log(data[0]);
 		});
+	*/
+
+	SpecialListService.GetOne($http, $stateParams.id, function(x) {
+		$scope.special_offer_detail = x;
+		$scope.special_offer_detail['showurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['showurl']);
+		$scope.special_offer_detail['jumpurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['jumpurl']);
+	});
+
 
 	$scope.$on('$destroy', function iVeBeenDismissed() {
 		// say goodbye to your controller here
 		console.log("goodbye special list");
 	});
 	
+})
+
+.controller('special_add', 
+  function($rootScope, $scope, $http, $sce) {
+	$scope.detail = {};
+	$scope.submit = function() {
+	
+		var words = $scope.detail.data.split('\t')		
+		var id = words[3].split('/')
+		var f_id = id[id.length - 1].split('.')
+
+		json = {
+			"name":words[1],
+			"id":f_id[0],
+			"type":'travel',
+			"time":new Date(),
+			"price":words[6],
+			"start_time":words[4],
+			"start_city":words[2],
+			"end_city":words[0],
+			"jumpurl":words[3],
+			"url":words[3],
+			"content":words[8],
+			"offsale":words[5],
+			"quota":words[7],
+		};
+
+
+		var rest = "/special_offer/add?json=" + encodeURIComponent(JSON.stringify(json));
+
+		console.log(rest);
+		$http.get(rest).
+			success(function(data) {
+		});		
+	};
 });

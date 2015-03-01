@@ -17,18 +17,26 @@
 		  <img src="http://images4.c-ctrip.com/target/hotel/20000/19562/5e6f3da6768544a985dd76df348b14e6.jpg">
 			-->
 
-		  <img src="{{item.crawl.pricture[1]}}" wight="80px" height="70px">
+		  <img src="{{item.crawl.pricture[0]}}" wight="80px" height="70px">
 
 		  <h2>{{item.name}}</h2>
 
 		  <p>
 		  {{item.start_city}}
-		   &nbsp &nbsp 
+		   &nbsp  
 			{{item.start_time}}
+		   &nbsp  
+			{{item.offsale}}
+		   &nbsp  
+			{{item.quota}}
           </p>
 		  <p>￥{{item.price}}</p>
 			
 	  </a>
+
+	<button class="button button-full button-positive" ng-click="showmore()">
+		{{button_name}}
+	</button>
   </div>
   </ion-content>
 </ion-view>
