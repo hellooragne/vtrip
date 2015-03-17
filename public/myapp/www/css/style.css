@@ -2,4 +2,6 @@
 .iframe-issue {
 	-webkit-overflow-scrolling: touch !important;
 	overflow: scroll !important;
+	width: 100%;
+	height: 100%;
 }

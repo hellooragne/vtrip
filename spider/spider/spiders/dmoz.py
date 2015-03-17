@@ -100,3 +100,7 @@ class DmozSpider(BaseSpider):
             urls = hxs.xpath('//div[@class="product_feature"]//img/@src')
             url  = urls.extract()
             self.VDBobj.Update(index, url)
+        if (len(url) == 0):
+            urls = hxs.xpath('//div[@class="hot_recommend"]//img/@src')
+            url  = urls.extract()
+            self.VDBobj.Update(index, url)

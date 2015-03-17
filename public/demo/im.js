@@ -20,16 +20,10 @@
 
 	im.prototype.handleOpen = function(conn, c) {
 		var _this = this;
-		console.log('handle open');
-
 		//获取当前登录人的联系人列表
-		conn.getRoster({
-			success : function(roster) {
-				// 页面处理
 				var curroster;
 				for ( var i in roster) {
 					var ros = roster[i];
-					//both为双方互为好友，要显示的联系人,from我是对方的单向好友
 					if (ros.subscription == 'both'
 						|| ros.subscription == 'from') {
 

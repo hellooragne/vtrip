@@ -115,6 +115,56 @@ angular.module('starter.services', [])
   }
 })
 
+.factory('Im', function() {
+	var vtrip_im = {
+		init: function() {
+
+		},
+
+		open : function(c) {
+			this.conn.open({
+				user : c.username,
+			pwd :  c.password,
+			//连接时提供appkey
+			appKey : 'helloorange#vtrip'
+			});
+		},
+
+		handleOpen : function(conn, c) {
+			var _this = this;
+			//获取当前登录人的联系人列表
+			var curroster;
+			for ( var i in roster) {
+				var ros = roster[i];
+				if (ros.subscription == 'both'
+						|| ros.subscription == 'from') {
+
+							console.log(roster[i].name);
+						} else if (ros.subscription == 'to') {
+							//to表明了联系人是我的单向好友
+							console.log(roster[i].name);
+						}
+			}
+
+			conn.setPresence();
+			//获取当前登录人的群组列表
+			conn.listRooms({
+				success : function(rooms) {
+					if (rooms) {
+						for (var i in rooms) {
+							console.log("rooms is " + rooms[i].name + "   " + rooms[i].roomId);
+						}
+						c.onOpen({roster: roster, rooms: rooms});
+					}
+				},
+				error : function(e) {
+
+				}
+			});
+		},
+	};
+	return vtrip_im;
+})
 
 .factory('SpecialListService', function() {
 
