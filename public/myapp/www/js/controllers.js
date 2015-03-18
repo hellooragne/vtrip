@@ -74,6 +74,13 @@ angular.module('starter.controllers', [])
 
 })
 
+
+.controller('control_im', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im) {
+
+	s_im.init();
+	s_im.open({username:'test', password:'123456'});
+})
+
 .controller('special_detail', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService) {
 	
 	/*special list */

@@ -115,24 +115,66 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('Im', function() {
+.factory('s_im', function() {
 	var vtrip_im = {
 		init: function() {
-
+			var _this = this;
+			_this.conn  = new Easemob.im.Connection();
+			_this.conn.init({
+				//当连接成功时的回调方法
+				onOpened : function() {
+					console.log("befare onOpen1");
+					_this.handleOpen(_this.conn);
+				},
+				onClosed : function() {
+					//handleClosed();
+				},
+				//收到文本消息时的回调方法
+				onTextMessage : function(message) {
+					console.log('recv message');
+					c.handleTextMessage(message);
+				},
+				//收到表情消息时的回调方法
+				onEmotionMessage : function(message) {
+					//handleEmotion(message);
+				},
+				//收到图片消息时的回调方法
+				onPictureMessage : function(message) {
+					//handlePictureMessage(message);
+				},
+				//收到音频消息的回调方法
+				onAudioMessage : function(message) {
+					//handleAudioMessage(message);
+				},
+				onLocationMessage : function(message) {
+					//handleLocationMessage(message);
+				},
+				//收到联系人订阅请求的回调方法
+				onPresence : function(message) {
+					//handlePresence(message);
+				},
+				//收到联系人信息的回调方法
+				onRoster : function(message) {
+					//handleRoster(message);
+				},
+				//异常时的回调方法
+				onError : function(message) {
+					//handleError(message);
+				}
+			});
 		},
 
 		open : function(c) {
 			this.conn.open({
 				user : c.username,
-			pwd :  c.password,
-			//连接时提供appkey
-			appKey : 'helloorange#vtrip'
+				pwd :  c.password,
+				appKey : 'helloorange#vtrip'
 			});
 		},
 
-		handleOpen : function(conn, c) {
+		handleOpen : function(conn) {
 			var _this = this;
-			//获取当前登录人的联系人列表
+			/*
 			var curroster;
 			for ( var i in roster) {
 				var ros = roster[i];
@@ -141,20 +183,19 @@ angular.module('starter.services', [])
 
 							console.log(roster[i].name);
 						} else if (ros.subscription == 'to') {
-							//to表明了联系人是我的单向好友
 							console.log(roster[i].name);
 						}
 			}
+			*/
 
 			conn.setPresence();
-			//获取当前登录人的群组列表
 			conn.listRooms({
 				success : function(rooms) {
 					if (rooms) {
 						for (var i in rooms) {
 							console.log("rooms is " + rooms[i].name + "   " + rooms[i].roomId);
 						}
-						c.onOpen({roster: roster, rooms: rooms});
+						//c.onOpen({roster: roster, rooms: rooms});
 					}
 				},
 				error : function(e) {
