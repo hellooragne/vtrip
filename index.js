@@ -1,12 +1,10 @@
 var os = require('os');  
 var app = require('express')()
    , server = require('http').createServer(app)
-   , io = require('socket.io').listen(8082)
 
 var express = require('express');
 
-io.set('log level', 1); 
-server.listen(80);
+server.listen(8080);
 
 app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/views');

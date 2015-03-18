@@ -115,6 +115,29 @@ angular.module('starter.services', [])
   }
 })
 
+.factory('s_item', function() {
+	var vtrip_item = {
+		my_item : [],
+
+		add : function(item) {
+			var _this = this;
+			_this.my_item.push(item);
+		},
+		
+		get: function(cb) {
+			var _this = this;
+			cb(_this.my_item);
+		},
+
+		clear : function() {
+			var _this = this;
+			_this.my_item = [];
+		}
+	};
+	return vtrip_item;
+
+})
+
 .factory('s_im', function() {
 	var vtrip_im = {
 		init: function() {

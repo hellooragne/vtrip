@@ -52,6 +52,10 @@ angular.module('starter.controllers', [])
   function($rootScope, $scope, $http, $sce, SpecialListService) {
 
 	$scope.special_offer_list = [];
+	$scope.special_hotel_list = [];
+	$scope.special_eat_list = [];
+	$scope.special_guide_list = [];
+	$scope.special_group_list = [];
 	$scope.skip = 0;
 	$scope.end = false;
 	$scope.scroll_show = false;
@@ -72,6 +76,78 @@ angular.module('starter.controllers', [])
 		}
 	};
 
+
+	var search = function(type, callback) {
+
+		json = {"type":type, "limit":20,"skip":0};
+
+	
+		var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+		$scope.a = 1;
+
+		$http.get(rest).success(function(data) {
+			callback(data);
+		});
+	}
+
+	search('hotel', function(data) {
+		console.log(data);
+		$scope.special_hotel_list = data;
+	});
+
+	search('eat', function(data) {
+
+		$scope.special_eat_list = data;
+	});
+
+	search('guide', function(data) {
+
+		$scope.special_guide_list = data;
+	});
+
+
+
+	search('group', function(data) {
+		$scope.special_group_list = data;
+	});
+})
+
+
+.controller('control_myitem', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im, s_item) {
+	$scope.data = {};
+	$scope.data.name = 'myitem';
+
+	s_item.get(function(data) {
+		$scope.data.my_item = data;
+		$scope.data.totle_price = 0;
+      	for (i in data) {
+			$scope.data.totle_price += parseInt(data[i].price);
+			console.log(data[i].price);
+		}
+
+		$scope.publish = function() {
+			if ($scope.data.my_item.length > 0) {
+
+				json = {
+					"name":$scope.data.name,
+					"type":'group',
+					"time":new Date(),
+					"price":$scope.data.totle_price,
+					"items":$scope.data.my_item
+				};
+
+				console.log(json);
+				var rest = "/special_offer/add?json=" + encodeURIComponent(angular.toJson(json));
+
+				$http.get(rest).success(function(data) {
+					window.location.href = "#/app/playlists";
+				});
+			}
+			
+		};
+	});
+
+	$scope.data.mytime = new Date();
 })
 
 
@@ -81,7 +157,16 @@ angular.module('starter.controllers', [])
 	s_im.open({username:'test', password:'123456'});
 })
 
-.controller('special_detail', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService) {
+.controller('special_detail', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_item) {
+
+	$rootScope.root_button_show = 'true';
+	
+
+	$scope.$on('$destroy', function iVeBeenDismissed() {
+		console.log("goodbye im ");
+		$rootScope.root_button_show = 'false';
+		$rootScope.root_click = null;
+	});
 	
 	/*special list */
 	/*
@@ -107,14 +192,12 @@ angular.module('starter.controllers', [])
 		$scope.special_offer_detail = x;
 		$scope.special_offer_detail['showurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['showurl']);
 		$scope.special_offer_detail['jumpurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['jumpurl']);
+
+		$rootScope.root_click = function() {
+			s_item.add(x);
+		};
 	});
 
-
-	$scope.$on('$destroy', function iVeBeenDismissed() {
-		// say goodbye to your controller here
-		console.log("goodbye special list");
-	});
-	
 })
 
 .controller('special_add', 

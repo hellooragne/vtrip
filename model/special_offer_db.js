@@ -3,8 +3,9 @@ sprintf = require('sprintf').sprintf;
 
 var special_offer_db = {
 	add: function(list, get_cb)	{
-		collection['special_offer'].insert(list, function(err, docs) {});
-		get_cb();
+		collection['special_offer'].insert(list, function(err, docs) {
+			get_cb();
+		});
 	},
 
 	search: function(req, get_cb) {

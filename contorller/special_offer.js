@@ -41,10 +41,12 @@ module.exports = function(app) {
 	app.get('/special_offer/add', function (req, res) {
 		var data = JSON.parse(req.query.json);
 
-		trans_url(data);
+		//trans_url(data);
+
+		//console.log(data);
 
 		special_offer_Db.add(data, function() {
-			res.send("finish");
+			res.send("add finish");
 		});
 	});
 
