@@ -138,7 +138,7 @@ angular.module('starter.services', [])
 
 })
 
-.factory('s_im', function($http, $rootScope) {
+.factory('s_im', ['$rootScope', function($rootScope) {
 	var vtrip_im = {
 		init: function() {
 			var _this = this;
@@ -227,12 +227,18 @@ angular.module('starter.services', [])
 			});
 		},
 
-		handleTextMessage: function() {
-
+		handleTextMessage: function(message) {
+			var from = message.from;//消息的发送者
+			var mestype = message.type;//消息发送的类型是群组消息还是个人消息
+			var messageContent = message.data;//文本消息体
+			//TODO  根据消息体的to值去定位那个群组的聊天记录
+			var room = message.to;
+			console.log(messageContent);
+			$rootScope.$broadcast("myEvent", message);
 		},
 	};
 	return vtrip_im;
-})
+}])
 
 .factory('SpecialListService', function() {
 
