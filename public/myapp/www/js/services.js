@@ -245,7 +245,7 @@ angular.module('starter.services', [])
 			var _this = this;
 			if (end == false) {
 
-				var json = {"limit":20,"skip":_this.skip};
+				var json = {"type":"travelling","limit":20,"skip":_this.skip};
 				var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
 
 				$http.get(rest).success(function(data) {

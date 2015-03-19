@@ -48,7 +48,8 @@ class VDB(object):
 
     def Update(self, index, data):
         u_id = self.j_id[index]
-        self.db.special_offer.update({"_id": u_id}, {"$set": {"crawl.pricture": data}})
+        #self.db.special_offer.update({"_id": u_id}, {"$set": {"crawl.pricture": data}})
+        self.db.special_offer.update({"_id": u_id}, {"$set": {"type": "travelling"}})
 
 
 

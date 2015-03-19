@@ -212,7 +212,7 @@ angular.module('starter.controllers', [])
 		json = {
 			"name":words[1],
 			"id":f_id[0],
-			"type":'travel',
+			"type":"hotel",
 			"time":new Date(),
 			"price":words[6],
 			"start_time":words[4],
@@ -231,6 +231,7 @@ angular.module('starter.controllers', [])
 		console.log(rest);
 		$http.get(rest).
 			success(function(data) {
+				$scope.detail.data = '';
 		});		
 	};
 });
