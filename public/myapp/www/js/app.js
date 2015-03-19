@@ -40,15 +40,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('app.browse', {
-    url: "/browse",
+  .state('app.im', {
+    url: "/im",
     views: {
       'menuContent': {
-        templateUrl: "templates/browse.html",
+        templateUrl: "templates/im.html",
         controller: 'control_im'
       }
     }
   })
+
+  .state('app.chat', {
+	url: "/im/:id",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/chat.html",
+        controller: 'control_chat'
+      }
+    }
+  })
+
 
   .state('app.playlists', {
     url: "/playlists",

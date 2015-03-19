@@ -138,7 +138,7 @@ angular.module('starter.services', [])
 
 })
 
-.factory('s_im', function() {
+.factory('s_im', function($http, $rootScope) {
 	var vtrip_im = {
 		init: function() {
 			var _this = this;
@@ -155,7 +155,7 @@ angular.module('starter.services', [])
 				//收到文本消息时的回调方法
 				onTextMessage : function(message) {
 					console.log('recv message');
-					c.handleTextMessage(message);
+					_this.handleTextMessage(message);
 				},
 				//收到表情消息时的回调方法
 				onEmotionMessage : function(message) {
@@ -188,28 +188,28 @@ angular.module('starter.services', [])
 		},
 
 		open : function(c) {
-			this.conn.open({
+			var _this = this;
+			_this.conn.open({
 				user : c.username,
 				pwd :  c.password,
 				appKey : 'helloorange#vtrip'
 			});
 		},
 
+		SendText : function(to, msg, type) {
+			var _this = this;
+			var options = {
+				to : to,
+				msg : msg,
+				type : type 
+			};
+
+			//easemobwebim-sdk发送文本消息的方法 to为发送给谁，meg为文本消息对象
+			_this.conn.sendTextMessage(options);
+		},
+
 		handleOpen : function(conn) {
 			var _this = this;
-			/*
-			var curroster;
-			for ( var i in roster) {
-				var ros = roster[i];
-				if (ros.subscription == 'both'
-						|| ros.subscription == 'from') {
-
-							console.log(roster[i].name);
-						} else if (ros.subscription == 'to') {
-							console.log(roster[i].name);
-						}
-			}
-			*/
 
 			conn.setPresence();
 			conn.listRooms({
@@ -225,6 +225,10 @@ angular.module('starter.services', [])
 
 				}
 			});
+		},
+
+		handleTextMessage: function() {
+
 		},
 	};
 	return vtrip_im;
