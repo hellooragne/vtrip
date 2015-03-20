@@ -45,12 +45,93 @@ angular.module('starter.controllers', [])
   ];
 })
 
+.controller('control_myitem', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im, s_item) {
+
+})
+
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 
 })
 
+.controller('control_im', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im) {
+
+	$scope.group_chat_list = [];
+	$scope.my_chat_list = [];
+	$scope.local_service_list = [];
+
+	$scope.button_name = 'ShowMore';
+
+	var search = function(type, callback) {
+
+		json = {"type":type, "limit":20,"skip":0};
+
+	
+		var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+		$scope.a = 1;
+
+		$http.get(rest).success(function(data) {
+			callback(data);
+		});
+	}
+
+	search('group_chat', function(data) {
+		console.log(data);
+		$scope.group_chat_list = data;
+	});
+
+	search('my_chat', function(data) {
+		console.log(data);
+		$scope.my_chat_list = data;
+	});
+
+
+	search('local_service_chat', function(data) {
+		console.log(data);
+		$scope.local_service_list = data;
+	});
+
+
+	
+})
+
+.controller('control_chat', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im) {
+	
+	/*
+	json['_id'] = $stateParams.id; 
+	
+	json = {"limit":20,"skip":0};
+
+	var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+	$scope.a = 1;
+
+	$http.get(rest).
+		success(function(data) {
+			$scope.special_offer_detail = data[0];
+			$scope.special_offer_detail['showurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['showurl']);
+			$scope.special_offer_detail['jumpurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['jumpurl']);
+				
+
+			console.log(data[0]);
+		});
+	*/
+
+  
+	$scope.ChatData = {};
+
+	$scope.Send = function() {
+
+		s_im.SendText('test2', $scope.ChatDate.data, "chat");
+	};
+
+	
+	$scope.$on('myEvent', function(e, value) {
+	     console.log('This is the angular event ', e);
+	    console.log('This is the value ', value)
+	});
+})
+
 .controller('special_list', 
-  function($rootScope, $scope, $http, $sce, SpecialListService) {
+  function($rootScope, $scope, $http, $sce, SpecialListService, s_im, s_item) {
 
 	$scope.special_offer_list = [];
 	$scope.special_hotel_list = [];
@@ -111,10 +192,9 @@ angular.module('starter.controllers', [])
 	search('group', function(data) {
 		$scope.special_group_list = data;
 	});
-})
 
 
-.controller('control_myitem', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im, s_item) {
+
 	$scope.data = {};
 	$scope.data.name = 'myitem';
 
@@ -153,21 +233,8 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('control_im', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im) {
 
 
-
-	$scope.$on('myEvent', function(e, value) {
-	     console.log('This is the angular event ', e);
-	    console.log('This is the value ', value)
-	});	 
-})
-
-.controller('control_chat', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im) {
-	
-	s_im.SendText('test2', "hello hotel", "chat");
-	
-})
 
 .controller('special_detail', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_item) {
 
