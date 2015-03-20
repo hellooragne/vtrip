@@ -3,11 +3,11 @@
   
   		<div class="list">
 			<div ng-repeat="item in chat_message_list">
-				<a class="item item-avatar-right" ng-show="">
+				<a class="item item-avatar-right" ng-show='item.from == "me"'>
 					<img src="{{item.crawl.pricture[0]}}" wight="80px" height="70px">
 					<h2>{{item.message}}</h2>
 				</a>
-				<a class="item item-avatar-right" ng-show="">
+				<a class="item item-avatar-right" ng-show='item.from != "me"'>
 					<img src="{{item.crawl.pricture[0]}}" wight="80px" height="70px">
 					<h2>{{item.message}}</h2>
 				</a>
