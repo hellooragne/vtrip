@@ -39,6 +39,27 @@
 		console.log(window.screen.availHeight);
 	};
 
+	function disablefull(id) {
+
+		setTimeout(function() {
+					var docu = document.getElementById(id).contentWindow.document;
+					if (docu.exitFullscreen) {  
+						docu.exitFullscreen();  
+					}  
+					else if (docu.mozCancelFullScreen) {  
+						docu.mozCancelFullScreen();  
+					}  
+					else if (docu.webkitCancelFullScreen) {  
+						docu.webkitCancelFullScreen();  
+					}
+					else if (docu.msExitFullscreen) {
+						docu.msExitFullscreen();
+					}
+					console.log('timeout');
+				},10000);
+		
+
+	};
 	
 	</script>
 	
