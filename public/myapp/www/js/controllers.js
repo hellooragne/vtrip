@@ -96,37 +96,35 @@ angular.module('starter.controllers', [])
 
 .controller('control_chat', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im) {
 	
-	/*
+	$scope.ChatData = {};
+	$scope.chat_message_list = [];
+
 	json['_id'] = $stateParams.id; 
-	
 	json = {"limit":20,"skip":0};
 
 	var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
-	$scope.a = 1;
 
-	$http.get(rest).
-		success(function(data) {
+	$http.get(rest).success(function(data) {
 			$scope.special_offer_detail = data[0];
-			$scope.special_offer_detail['showurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['showurl']);
-			$scope.special_offer_detail['jumpurl'] = $sce.trustAsResourceUrl($scope.special_offer_detail['jumpurl']);
-				
-
 			console.log(data[0]);
-		});
-	*/
 
-  
-	$scope.ChatData = {};
+			$scope.Send = function() {
+				s_im.SendText('test2', $scope.ChatData.data, "chat");
+				var data = {
+					from: 'me',
+					message : $scope.ChatData.data,
+				};
+				$scope.chat_message_list.push(data);
+				$scope.ChatData = {};
+			};
 
-	$scope.Send = function() {
-
-		s_im.SendText('test2', $scope.ChatDate.data, "chat");
-	};
-
-	
-	$scope.$on('myEvent', function(e, value) {
-	     console.log('This is the angular event ', e);
-	    console.log('This is the value ', value)
+			$scope.$on('myEvent', function(e, value) {
+				var data = {
+					from: value.from,
+					message : value.data,
+				};
+				$scope.chat_message_list.push(data);
+			});
 	});
 })
 
