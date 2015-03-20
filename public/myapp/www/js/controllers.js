@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, s_im) {
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -24,7 +24,8 @@ angular.module('starter.controllers', [])
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
-
+	s_im.init();
+	s_im.open({username : $scope.loginData.username, password : $scope.loginData.password});
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
     $timeout(function() {
@@ -154,8 +155,7 @@ angular.module('starter.controllers', [])
 
 .controller('control_im', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im) {
 
-	s_im.init();
-	s_im.open({username:'test', password:'123456'});
+
 
 	$scope.$on('myEvent', function(e, value) {
 	     console.log('This is the angular event ', e);
