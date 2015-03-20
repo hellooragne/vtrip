@@ -3118,6 +3118,15 @@ a.subdued {
   .bar-footer.item-input-inset {
     position: absolute; }
 
+.bar-myfooter {
+  bottom: 0;
+  border-top-width: 1px;
+  border-bottom-width: 0;
+  background-position: top;
+  height: 88px; }
+  .bar-footer.item-input-inset {
+    position: absolute; }
+
 .bar-tabs {
   padding: 0; }
 
