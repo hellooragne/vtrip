@@ -18,3 +18,13 @@
 	background-color: #f5f5f5;
 	border-right: 1px solid #eee;
 }
+
+
+.chat01_content {
+	height: 312px;
+	width: 555px;
+	overflow-x: none;
+	overflow-y: auto;
+	border:"1";
+   	bordercolor:"#000000";
+}

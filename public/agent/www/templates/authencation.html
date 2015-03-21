@@ -2,7 +2,41 @@
 <ion-content>
 <h1 class="page-header">坐席管理</h1>
 <div class="table-responsive">
-	
+	<div class="row">
+		<div class="col-33">
+			<ion-view view-title="chat">
+				<ion-content class="chat-ui">
+
+				<div class="list">
+					<div ng-repeat="item in chat_message_list">
+						<a class="item item-avatar" ng-show='item.from == "me"'>
+							<img ng-src="{{item.pic}}" wight="80px" height="70px">
+							<h2>{{item.from}}说:</h2>
+							<p>{{item.message}}</p>
+						</a>
+						<a class="item item-avatar-right" ng-hide='item.from == "me"'>
+							<img ng-src="{{item.pic}}" wight="80px" height="70px">
+							<h2>{{item.from}}说:</h2>
+							<p>{{item.message}}</p>
+						</a>
+					</div>
+				</div> 
+				</ion-content>
+
+
+				<div class="bar bar-myfooter">
+					123	
+
+				</div>
+
+			</ion-view>
+		</div>
+
+		<div class="col-66">
+
+		</div>
+	</div>
+
 </div>
 </ion-content>
 </ion-view>
