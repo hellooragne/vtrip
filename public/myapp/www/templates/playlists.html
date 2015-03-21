@@ -1,4 +1,4 @@
-<ion-view view-title="我的商城">
+<ion-view view-title="商城">
   <div class="bar bar-header bar-positive">
 	    <h1 class="title">bar-positive</h1>
 	</div>
@@ -178,12 +178,12 @@
 			</header>
 			<ion-content has-header="true">
 				<div class="list">
-					<a class="item item-thumbnail-left" href="#/app/playlists/{{item._id}}" ng-repeat="item in special_group_list">
+					<a class="item item-thumbnail-left" href="#/app/groupitem/{{item._id}}" ng-repeat="item in special_group_list">
 						<!--
 						<img src="http://images4.c-ctrip.com/target/hotel/20000/19562/5e6f3da6768544a985dd76df348b14e6.jpg">
 						-->
 
-						<img src="{{item.crawl.pricture[0]}}" wight="80px" height="70px">
+						<img src="{{item.pic}}" wight="80px" height="70px">
 
 						<h2>{{item.name}}</h2>
 
@@ -205,14 +205,14 @@
 		</ion-tab>
 
 
-		<ion-tab title="我的">
+		<ion-tab title="购物车">
 			<header class="bar bar-header ">
 				<h1 class="page-header">Route</h1>
 			</header>
 			<ion-content has-header="true">
 				<div class="list card">
 				  <div class="item item-avatar">
-					<img src="https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png">
+					  <img src="{{loginData.img}}">
 					<label class="">
 						<input type="search" ng-model="data.name">
 					</label>

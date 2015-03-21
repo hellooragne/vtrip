@@ -81,6 +81,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+
+  .state('app.groupitem', {
+    url: "/groupitem/:id",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/groupitem.html",
+        controller: 'groupitem'
+      }
+    }
+  })
+
   .state('app.special_add', {
     url: "/special_add",
     views: {

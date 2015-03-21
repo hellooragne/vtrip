@@ -3,6 +3,8 @@ angular.module('starter.controllers', [])
 .controller('AppCtrl', function($rootScope, $scope, $ionicModal, $timeout, $http, s_im) {
   // Form data for the login modal
   $rootScope.loginData = {};
+  $rootScope.loginData.username = "test";
+  $rootScope.loginData.password = "123456";
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -21,18 +23,26 @@ angular.module('starter.controllers', [])
     $scope.modal.show();
   };
 
-  var search = function(type, name, callback) {
+  var search = function(type, callback) {
 
-		json = {"type":type, "name" : name,  "limit":20,"skip":0};
+		json = {"type":type, "limit":20,"skip":0};
 
 	
 		var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
-		$scope.a = 1;
 
 		$http.get(rest).success(function(data) {
 			callback(data);
 		});
   }
+
+  $rootScope.GetPeople = function(username) {
+	  for (x in $rootScope.UserList) {
+			if ($rootScope.UserList[x].name == username) {
+				return $rootScope.UserList[x].img;
+			}
+	  }
+
+  };
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
@@ -41,9 +51,10 @@ angular.module('starter.controllers', [])
 	s_im.open({username : $rootScope.loginData.username, password : $rootScope.loginData.password});
 
 
-	search('register', $rootScope.loginData.username, function(data) {
+	search('register', function(data) {
 		console.log(data);
-		$rootScope.loginData.img = data[0].img;
+		$rootScope.UserList = data;
+		$rootScope.loginData.img = $rootScope.GetPeople($rootScope.loginData.username);
 	});
 
 
@@ -140,9 +151,11 @@ angular.module('starter.controllers', [])
 			$scope.$on('myEvent', function(e, value) {
 				$scope.$apply(function (){
 					if (value.from != $rootScope.loginData.username) {
+						var pic = $rootScope.GetPeople(value.from);
 						var data = {
 							from: value.from,
 							message : value.data,
+							pic : pic,
 						};
 						$scope.chat_message_list.push(data);
 					}
@@ -242,13 +255,18 @@ angular.module('starter.controllers', [])
 					"type":'group',
 					"time":new Date(),
 					"price":$scope.data.totle_price,
-					"items":$scope.data.my_item
+					"items":$scope.data.my_item,
+					"pic":$rootScope.loginData.img,
 				};
 
 				console.log(json);
 				var rest = "/special_offer/add?json=" + encodeURIComponent(angular.toJson(json));
 
 				$http.get(rest).success(function(data) {
+					$scope.data = {};
+					search('group', function(data) {
+						$scope.special_group_list = data;
+					});
 					window.location.href = "#/app/playlists";
 				});
 			}
@@ -305,6 +323,23 @@ angular.module('starter.controllers', [])
 		};
 	});
 
+})
+
+
+.controller('groupitem', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im, s_item) {
+
+	json = {"_id":$stateParams.id,"limit":20,"skip":0};
+
+	console.log($stateParams.id);
+
+	var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+	$scope.a = 1;
+
+	$http.get(rest).success(function(data) {
+			console.log(data);
+			$scope.data = data[0];
+				
+		});
 })
 
 .controller('special_add', 
