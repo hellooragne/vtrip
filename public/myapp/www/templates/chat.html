@@ -4,12 +4,14 @@
   		<div class="list">
 			<div ng-repeat="item in chat_message_list">
 				<a class="item item-avatar" ng-show='item.from == "me"'>
-					<img src="{{item.crawl.pricture[0]}}" wight="80px" height="70px">
-					<h2>{{item.message}}</h2>
+					<img ng-src="{{item.pic}}" wight="80px" height="70px">
+					<h2>{{item.from}}说:</h2>
+					<p>{{item.message}}</p>
 				</a>
 				<a class="item item-avatar-right" ng-hide='item.from == "me"'>
-					<img src="{{item.crawl.pricture[0]}}" wight="80px" height="70px">
-					<h2>{{item.message}}</h2>
+					<img ng-src="{{item.pic}}" wight="80px" height="70px">
+					<h2>{{item.from}}说:</h2>
+					<p>{{item.message}}</p>
 				</a>
 			</div>
   		</div> 

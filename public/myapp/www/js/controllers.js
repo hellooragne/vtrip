@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, s_im) {
+.controller('AppCtrl', function($rootScope, $scope, $ionicModal, $timeout, $http, s_im) {
   // Form data for the login modal
-  $scope.loginData = {};
+  $rootScope.loginData = {};
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -21,13 +21,32 @@ angular.module('starter.controllers', [])
     $scope.modal.show();
   };
 
+  var search = function(type, name, callback) {
+
+		json = {"type":type, "name" : name,  "limit":20,"skip":0};
+
+	
+		var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
+		$scope.a = 1;
+
+		$http.get(rest).success(function(data) {
+			callback(data);
+		});
+  }
+
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
+    console.log('Doing login', $rootScope.loginData);
 	s_im.init();
-	s_im.open({username : $scope.loginData.username, password : $scope.loginData.password});
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
+	s_im.open({username : $rootScope.loginData.username, password : $rootScope.loginData.password});
+
+
+	search('register', $rootScope.loginData.username, function(data) {
+		console.log(data);
+		$rootScope.loginData.img = data[0].img;
+	});
+
+
     $timeout(function() {
       $scope.closeLogin();
     }, 1000);
@@ -79,7 +98,8 @@ angular.module('starter.controllers', [])
 		$scope.group_chat_list = data;
 	});
 
-	search('local_service_chat', function(data) {
+	//search('local_service_chat', function(data) {
+	search('agent', function(data) {
 		console.log(data);
 		$scope.local_service_list = data;
 	});
@@ -106,10 +126,12 @@ angular.module('starter.controllers', [])
 			console.log(data[0]);
 
 			$scope.Send = function() {
-				s_im.SendText('test2', $scope.ChatData.data, "chat");
+				s_im.SendText('1426899873812949', $scope.ChatData.data, "groupchat");
+				console.log($rootScope.loginData.img);
 				var data = {
 					from: 'me',
 					message : $scope.ChatData.data,
+					pic : $rootScope.loginData.img,
 				};
 				$scope.chat_message_list.push(data);
 				$scope.ChatData = {};
@@ -117,11 +139,14 @@ angular.module('starter.controllers', [])
 
 			$scope.$on('myEvent', function(e, value) {
 				$scope.$apply(function (){
-					var data = {
-						from: value.from,
-						message : value.data,
-					};
-					$scope.chat_message_list.push(data);
+					if (value.from != $rootScope.loginData.username) {
+						var data = {
+							from: value.from,
+							message : value.data,
+						};
+						$scope.chat_message_list.push(data);
+					}
+					
 				});
 				
 			});
@@ -294,7 +319,7 @@ angular.module('starter.controllers', [])
 		json = {
 			"name":words[1],
 			"id":f_id[0],
-			"type":"agent",
+			"type":"group_chat",
 			"time":new Date(),
 			"price":words[6],
 			"start_time":words[4],
