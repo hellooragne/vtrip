@@ -1,4 +1,4 @@
-<ion-view view-title="Item list">
+<ion-view view-title="我的商城">
   <div class="bar bar-header bar-positive">
 	    <h1 class="title">bar-positive</h1>
 	</div>
@@ -7,7 +7,7 @@
   </ion-content>
 	
 	<ion-tabs class="tabs-striped tabs-top">
-		<ion-tab title="hotel">
+		<ion-tab title="酒店">
 			<header class="bar bar-header ">
 				<h1 class="page-header">Route</h1>
 			</header>
@@ -41,7 +41,7 @@
 			</ion-content>
 		</ion-tab>
 		
-		<ion-tab title="travel">
+		<ion-tab title="旅行">
 			<header class="bar bar-header ">
 				<h1 class="page-header">Route</h1>
 			</header>
@@ -76,7 +76,7 @@
 			</ion-content>
 		</ion-tab>
 
-		<ion-tab title="eat">
+		<ion-tab title="吃喝">
 			<header class="bar bar-header ">
 				<h1 class="page-header">Route</h1>
 			</header>
@@ -101,14 +101,14 @@
 						&nbsp  
 						{{item.quota}}
 						</p>
-						<p>￥{{item.price}}</p>
+						<p>￥{{item.price}} </p>
 
 					</a>
 					
 				</div>
 			</ion-content>
 		</ion-tab>
-		<ion-tab title="guide">
+		<ion-tab title="导游">
 			<header class="bar bar-header ">
 				<h1 class="page-header">Route</h1>
 			</header>
@@ -119,7 +119,7 @@
 						<img src="http://images4.c-ctrip.com/target/hotel/20000/19562/5e6f3da6768544a985dd76df348b14e6.jpg">
 						-->
 
-						<img src="{{item.crawl.pricture[0]}}" wight="80px" height="70px">
+						<img src="{{item.crawl.pricture[0]}}" wight="80px" >
 
 						<h2>{{item.name}}</h2>
 
@@ -140,18 +140,18 @@
 			</ion-content>
 		</ion-tab>
 		
-		<ion-tab title="service">
+		<ion-tab title="客服">
 			<header class="bar bar-header ">
 				<h1 class="page-header">Route</h1>
 			</header>
 			<ion-content has-header="true">
 				<div class="list">
-					<a class="item item-thumbnail-left" href="#/app/playlists/{{item._id}}" ng-repeat="item in special_guide_list">
+					<a class="item item-thumbnail-left" href="#/app/playlists/{{item._id}}" ng-repeat="item in special_agent_list">
 						<!--
 						<img src="http://images4.c-ctrip.com/target/hotel/20000/19562/5e6f3da6768544a985dd76df348b14e6.jpg">
 						-->
 
-						<img src="{{item.crawl.pricture[0]}}" wight="80px" height="70px">
+						<img src="{{item.crawl.pricture[0]}}" wight="80px" hight="140px">
 
 						<h2>{{item.name}}</h2>
 
@@ -164,7 +164,7 @@
 						&nbsp  
 						{{item.quota}}
 						</p>
-						<p>￥{{item.price}}</p>
+						<p>￥{{item.price}}/小时</p>
 
 					</a>
 					
@@ -172,7 +172,7 @@
 			</ion-content>
 		</ion-tab>
 
-		<ion-tab title="group">
+		<ion-tab title="套餐">
 			<header class="bar bar-header ">
 				<h1 class="page-header">Route</h1>
 			</header>
@@ -205,7 +205,7 @@
 		</ion-tab>
 
 
-		<ion-tab title="myitem">
+		<ion-tab title="我的">
 			<header class="bar bar-header ">
 				<h1 class="page-header">Route</h1>
 			</header>

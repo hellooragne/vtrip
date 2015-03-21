@@ -79,18 +79,15 @@ angular.module('starter.controllers', [])
 		$scope.group_chat_list = data;
 	});
 
-	search('my_chat', function(data) {
-		console.log(data);
-		$scope.my_chat_list = data;
-	});
-
-
 	search('local_service_chat', function(data) {
 		console.log(data);
 		$scope.local_service_list = data;
 	});
 
-
+	search('my_chat', function(data) {
+		console.log(data);
+		$scope.my_chat_list = data;
+	});
 	
 })
 
@@ -119,11 +116,14 @@ angular.module('starter.controllers', [])
 			};
 
 			$scope.$on('myEvent', function(e, value) {
-				var data = {
-					from: value.from,
-					message : value.data,
-				};
-				$scope.chat_message_list.push(data);
+				$scope.$apply(function (){
+					var data = {
+						from: value.from,
+						message : value.data,
+					};
+					$scope.chat_message_list.push(data);
+				});
+				
 			});
 	});
 })
@@ -135,6 +135,7 @@ angular.module('starter.controllers', [])
 	$scope.special_hotel_list = [];
 	$scope.special_eat_list = [];
 	$scope.special_guide_list = [];
+	$scope.special_agent_list = [];
 	$scope.special_group_list = [];
 	$scope.skip = 0;
 	$scope.end = false;
@@ -185,6 +186,10 @@ angular.module('starter.controllers', [])
 		$scope.special_guide_list = data;
 	});
 
+	search('agent', function(data) {
+
+		$scope.special_agent_list = data;
+	});
 
 
 	search('group', function(data) {
@@ -289,17 +294,20 @@ angular.module('starter.controllers', [])
 		json = {
 			"name":words[1],
 			"id":f_id[0],
-			"type":"hotel",
+			"type":"agent",
 			"time":new Date(),
 			"price":words[6],
 			"start_time":words[4],
 			"start_city":words[2],
 			"end_city":words[0],
-			"jumpurl":words[3],
+			"jumpurl":$scope.detail.url,
 			"url":words[3],
 			"content":words[8],
 			"offsale":words[5],
 			"quota":words[7],
+			"crawl": {
+				pricture:[$scope.detail.pricture,]
+			}
 		};
 
 
@@ -308,7 +316,11 @@ angular.module('starter.controllers', [])
 		console.log(rest);
 		$http.get(rest).
 			success(function(data) {
-				$scope.detail.data = '';
+				//$scope.detail.data = '';
+				$scope.detail.url = '';
+				$scope.detail.pricture = '';
+
+
 		});		
 	};
 });
