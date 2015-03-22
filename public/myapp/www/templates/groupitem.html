@@ -15,6 +15,9 @@
 							<input type="search" ng-model="data.name">
 						</label>
 						<p>{{data.mytime}}</p>
+						<button class="button button-positive" ng-click="publish()">
+							推广
+						</button>
 					</div>
 					<div class="item item-body">
 
@@ -43,9 +46,12 @@
 									<i class="icon ion-ios-heart-outline placeholder-icon">￥{{data.price}}</i>
 								</label>
 								<button class="button button-positive" ng-click="publish()">
-									Buy
+									购买
 								</button>
+
+								
 							</div>
+							
 						</div>
 					</div>
 				</div>

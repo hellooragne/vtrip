@@ -37,9 +37,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       'menuContent': {
         templateUrl: "templates/authencation.html",
         controller: 'authentication'
+      },
+      'myadd': {
+        templateUrl: "templates/chat.html",
       }
     }
   })
+
 
 
   .state('app.route', {
