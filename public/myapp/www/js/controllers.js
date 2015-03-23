@@ -88,6 +88,7 @@ angular.module('starter.controllers', [])
 	$scope.group_chat_list = [];
 	$scope.my_chat_list = [];
 	$scope.local_service_list = [];
+	$scope.local_people_list = [];
 
 	$scope.button_name = 'ShowMore';
 
@@ -110,9 +111,15 @@ angular.module('starter.controllers', [])
 	});
 
 	//search('local_service_chat', function(data) {
-	search('agent', function(data) {
+	search('guide', function(data) {
 		console.log(data);
 		$scope.local_service_list = data;
+	});
+
+
+	search('agent', function(data) {
+		console.log(data);
+		$scope.local_people_list = data;
 	});
 
 	search('my_chat', function(data) {
@@ -127,8 +134,8 @@ angular.module('starter.controllers', [])
 	$scope.ChatData = {};
 	$scope.chat_message_list = [];
 
-	json['_id'] = $stateParams.id; 
 	json = {"limit":20,"skip":0};
+	json['_id'] = $stateParams.id; 
 
 	var rest = encodeURI("/special_offer/search?json=" + JSON.stringify(json));
 
@@ -235,46 +242,48 @@ angular.module('starter.controllers', [])
 	});
 
 
+	$scope.click_shop = function() {
+		$scope.data = {};
+		$scope.data.name = 'myitem';
+		$scope.data.mytime = new Date();
 
-	$scope.data = {};
-	$scope.data.name = 'myitem';
-
-	s_item.get(function(data) {
-		$scope.data.my_item = data;
-		$scope.data.totle_price = 0;
-      	for (i in data) {
-			$scope.data.totle_price += parseInt(data[i].price);
-			console.log(data[i].price);
-		}
-
-		$scope.publish = function() {
-			if ($scope.data.my_item.length > 0) {
-
-				json = {
-					"name":$scope.data.name,
-					"type":'group',
-					"time":new Date(),
-					"price":$scope.data.totle_price,
-					"items":$scope.data.my_item,
-					"pic":$rootScope.loginData.img,
-				};
-
-				console.log(json);
-				var rest = "/special_offer/add?json=" + encodeURIComponent(angular.toJson(json));
-
-				$http.get(rest).success(function(data) {
-					$scope.data = {};
-					search('group', function(data) {
-						$scope.special_group_list = data;
-					});
-					window.location.href = "#/app/playlists";
-				});
+		s_item.get(function(data) {
+			$scope.data.my_item = data;
+			//$scope.data.totle_price;
+			console.log('get s_item');
+			for (i in data) {
+				$scope.data.totle_price += parseInt(data[i].price);
+				console.log(data[i].price);
 			}
-			
-		};
-	});
 
-	$scope.data.mytime = new Date();
+			$scope.publish = function() {
+				if ($scope.data.my_item.length > 0) {
+
+					json = {
+						"name":$scope.data.name,
+						"type":'group',
+						"time":new Date(),
+						"price":$scope.data.totle_price,
+						"items":$scope.data.my_item,
+						"pic":$rootScope.loginData.img,
+					};
+
+					s_item.clear();
+
+					console.log(json);
+					var rest = "/special_offer/add?json=" + encodeURIComponent(angular.toJson(json));
+
+					$http.get(rest).success(function(data) {
+						$scope.data.my_item = {};
+						search('group', function(data) {
+							$scope.special_group_list = data;
+						});
+					});
+				}
+
+			};
+		});
+	};
 })
 
 

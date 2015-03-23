@@ -4,7 +4,7 @@ var app = require('express')()
 
 var express = require('express');
 
-server.listen(8080);
+server.listen(80);
 
 app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/views');
@@ -33,7 +33,7 @@ app.all('*', function(req, res, next) {
 require('./contorller/index.js')(app);
 
 app.get('/', function (req, res) {
-	res.redirect('/app/www/');
+	res.redirect('/myapp/www/');
 });
 
 
