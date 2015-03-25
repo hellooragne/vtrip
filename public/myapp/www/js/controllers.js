@@ -143,6 +143,18 @@ angular.module('starter.controllers', [])
 			$scope.special_offer_detail = data[0];
 			console.log(data[0]);
 
+			if ($rootScope.tuichatmessage != null) {
+				if ($rootScope.tuichatmessage != '') {
+					var data = {
+						from: 'me',
+						message : $rootScope.tuichatmessage,
+						pic : $rootScope.loginData.img,
+					};
+					$scope.chat_message_list.push(data);
+					$rootScope.tuichatmessage = '';
+				}
+			}
+
 			$scope.Send = function() {
 				s_im.SendText('1426899873812949', $scope.ChatData.data, "groupchat");
 				console.log($rootScope.loginData.img);
@@ -349,6 +361,11 @@ angular.module('starter.controllers', [])
 			$scope.data = data[0];
 				
 		});
+	$scope.tui = function() {
+		$rootScope.tuichatmessage = "我参加了xx活动" + "http://121.40.198.251/myapp/www#/app/im/" + $stateParams.id;
+		window.location.href = "#/app/im/550c1e7dfeef6145b9f12276";
+
+	}
 })
 
 .controller('special_add', 
