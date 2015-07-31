@@ -60,6 +60,38 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+
+  .state('app.map', {
+    url: "/map",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/map.html",
+        controller: 'map'
+      }
+    }
+  })
+
+
+  .state('app.map_list', {
+    url: "/map_list",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/map_list.html",
+        controller: 'map_list'
+      }
+    }
+  })
+
+  .state('app.map_detail', {
+    url: "/map_detail",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/map_detail.html",
+        controller: 'map_detail'
+      }
+    }
+  })
+
   .state('app.playlists', {
     url: "/playlists",
     views: {
@@ -102,5 +134,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/map');
 });

@@ -75,6 +75,27 @@ angular.module('starter.controllers', [])
   ];
 })
 
+
+.controller('map', function($rootScope, $scope, $stateParams, $http, $sce) {
+
+	$scope.map_list_get = function() {
+		window.location.href = "#/app/map_list";
+	}
+})
+
+.controller('map_list', function($rootScope, $scope, $stateParams, $http, $sce) {
+
+	$scope.map_list = [
+		{ name: '上海 -- 北京', cost:"101", time:"30h", id: 1 },
+		{ name: '上海 -- 天津', cost:"120", time:"30h", id: 2 },
+		{ name: '上海 -- 武汉', cost:"105", time:"30h", id: 3 },
+		{ name: '上海 -- 武汉', cost:"300", time:"30h", id: 4 },
+		{ name: '上海 -- 天津', cost:"100", time:"30h", id: 5 },
+		{ name: '上海 -- 北京', cost:"100", time:"30h", id: 6 }
+	];
+
+})
+
 .controller('control_myitem', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im, s_item) {
 
 })

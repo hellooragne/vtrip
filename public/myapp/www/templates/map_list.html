@@ -1,0 +1,22 @@
+<ion-view view-title="路线">
+  <div class="bar bar-header bar-positive">
+	    <h1 class="title">bar-positive</h1>
+	</div>
+
+  <ion-content>
+	  <div class="list">
+		  <a class="item" href="#/app/playlists/{{item._id}}" ng-repeat="item in map_list">
+
+			  <h2>{{item.name}}</h2>
+
+			  <p>
+			  费用{{item.cost}}
+			  &nbsp  
+			  时间{{item.time}}
+			  &nbsp  
+			  </p>
+		  </a>
+
+	  </div>
+  </ion-content>
+</ion-view>

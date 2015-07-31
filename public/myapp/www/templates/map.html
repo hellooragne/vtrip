@@ -1,0 +1,23 @@
+<ion-view view-title="路线">
+  <div class="bar bar-header bar-positive">
+	    <h1 class="title">bar-positive</h1>
+	</div>
+
+  <ion-content>
+	  <form ng-submit="map_list_get()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">出发城市</span>
+          <input type="text" ng-model="map.start_city">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">终点城市</span>
+          <input type="text" ng-model="map.end_city">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">查询</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
