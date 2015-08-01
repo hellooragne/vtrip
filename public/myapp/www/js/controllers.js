@@ -77,6 +77,9 @@ angular.module('starter.controllers', [])
 
 
 .controller('map', function($rootScope, $scope, $stateParams, $http, $sce) {
+
+	$rootScope.map = {};
+
 	$scope.map_list_get = function() {
 		window.location.href = "#/app/map_list";
 	}
@@ -95,8 +98,8 @@ angular.module('starter.controllers', [])
 	];
 	*/
 
-	$scope.map_list = MapService.httpget($http, "", "");
-	console.log($scope.map_list);
+	console.log($rootScope.map.date_time);
+	$scope.map_list = MapService.httpget($http, $rootScope.map.start_city, $rootScope.map.end_city, String(new Date($rootScope.map.date_time)));
 })
 
 .controller('map_detail', function($rootScope, $scope, $stateParams, $http, $sce, MapService) {

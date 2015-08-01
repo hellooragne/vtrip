@@ -339,8 +339,17 @@ angular.module('starter.services', [])
 
 		},
 
-		httpget : function($http, StartCity, EndCity) {
+		httpget : function($http, StartCity, EndCity, date) {
 			var _this = this;
+
+			//http://xx.xx.xx.xx/get?StartCity=/*&EndCity=/**/*/
+			var rest = encodeURI("/get?StartCity=" + StartCity + "&EndCity=" + EndCity + "&date=" + date);
+
+			//var rest = "http://www.baidu.com"
+
+			$http.get(rest).success(function(data) {
+				console.log(data);
+			});
 
 			return _this.GetCity(_this.MapResult['res']);
 
