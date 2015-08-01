@@ -240,6 +240,116 @@ angular.module('starter.services', [])
 	return vtrip_im;
 }])
 
+
+.factory('MapService', function() {
+
+	var MapList = {
+		
+		MapResult : {
+		   
+			"res": [
+			   {//pathSet
+			       "city":['A','B','B', 'C'],
+			       "path":
+			       [//paths
+				   {//path
+				       "total_time":"60",
+				       "total_cost":"200",
+				       "element":
+					       [
+						   {"type":"coach", "name":"c1234", "from_station":"A1", "to_station":"B1", "from_city":"A", "to_city":"B", "depart_time":"008:00", "arrive_time":"009:00", "price_list":[{"type":"客车", "price":"60"}]},
+						   {"type":"train", "name":"D5240", "from_station":"A1", "to_station":"B1", "from_city":"A", "to_city":"B", "depart_time":"009:00", "arrive_time":"010:00", "price_list":[{"type":"二等座", "price":"150"},{"type":"一等座", "price":"200"},{"type":"商务座", "price":"300"}]}
+					       ]
+				   },
+				   {
+				       "total_time":"60",
+				       "total_cost":"200",
+				       "element":
+					       [
+						   {"type":"coach", "name":"c1234", "from_station":"A1", "to_station":"B1", "from_city":"A", "to_city":"B", "depart_time":"008:00", "arrive_time":"009:00", "price":"60"},
+						   {"type":"train", "name":"D5240", "from_station":"A1", "to_station":"B1", "from_city":"A", "to_city":"B", "depart_time":"009:00", "arrive_time":"010:00", "price":"60"}
+					       ]
+				   }
+			       ]
+			   },
+			   {  
+
+			       "city":['A','F', 'F', 'C'],
+			       "path":
+			       [
+				   {
+				       "total_time":"60",
+				       "total_cost":"200",
+				       "element":
+					       [
+						   {"type":"coach", "name":"c1234", "from_station":"A1", "to_station":"B1", "from_city":"A", "to_city":"B", "depart_time":"008:00", "arrive_time":"009:00", "price":"60"},
+						   {"type":"train", "name":"D5240", "from_station":"A1", "to_station":"B1", "from_city":"A", "to_city":"B", "depart_time":"009:00", "arrive_time":"010:00", "price":"60"}
+					       ]
+				    },
+				    {
+				       "total_time":"60",
+				       "total_cost":"200",
+				       "element":
+					       [
+						   {"type":"coach", "name":"c1234", "from_station":"A1", "to_station":"B1", "from_city":"A", "to_city":"B", "depart_time":"008:00", "arrive_time":"009:00", "price":"60"},
+						   {"type":"train", "name":"D5240", "from_station":"A1", "to_station":"B1", "from_city":"A", "to_city":"B", "depart_time":"009:00", "arrive_time":"010:00", "price":"60"}
+					       ]
+				    }
+			       ]
+			   }
+			   ]	 
+
+		},
+
+
+		GetCity : function(res) {
+			var _this = this;
+			var CityList = [];
+			for (x in res) {
+
+				/*
+				var CityListString = "";
+
+				for (y in res[x]['city']) {
+					CityListString += res[x]['city'][y];
+
+					if (parseInt(y) != res[x]['city'].length - 1) {
+						console.log(y + "    " + res[x]['city'].length);
+						if ((y % 2) == 0) {
+							CityListString += "-->";
+						} else {
+							CityListString += "  ";
+						}
+					}
+				}
+				*/
+
+				CityList.push({
+					"id" : x,
+					"name":res[x]['city']
+				});
+			}
+
+			return CityList;
+		},
+
+		GetMapDetail : function(id) {
+			var _this = this;
+			return _this.MapResult["res"][id]["path"];
+
+		},
+
+		httpget : function($http, StartCity, EndCity) {
+			var _this = this;
+
+			return _this.GetCity(_this.MapResult['res']);
+
+		},
+	};
+
+	return MapList;
+})
+
 .factory('SpecialListService', function() {
 
 	var SpecialList = {

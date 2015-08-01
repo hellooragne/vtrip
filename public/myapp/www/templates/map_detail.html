@@ -1,0 +1,29 @@
+{"type":"coach", "name":"c1234", "from_station":"A1", "to_station":"B1", "from_city":"A", "to_city":"B", "depart_time":"008:00", "arrive_time":"009:00", "price":"60"}
+
+<ion-view title="路线详情">
+  <ion-content scroll="true" overflow-scroll="true" class="has-header iframe-issue">
+
+  	<div class="list">
+		  <a class="item" ng-repeat="items in map_detail_list">
+		  	<div  ng-repeat="item in items.element">
+				<h2 ng-show='item.type == "coach"'>
+					<spin > <i class="icon ion-model-s"></i> 出发站:{{item.from_station}}  终点站:{{item.to_station}}</spin> </br>
+					<spin > <i class="icon ion-model-s"></i> 出发时间:{{item.depart_time}}  到达时间:{{item.arrive_time}} ${{item.price}}</spin>
+				</h2>
+
+				<h2 ng-show='item.type == "train"'>
+					<spin > <i class="icon ion-navigate"></i> 出发站:{{item.from_station}}  终点站:{{item.to_station}}</spin> </br>
+					<spin > <i class="icon ion-navigate"></i> 出发时间:{{item.depart_time}}  到达时间:{{item.arrive_time}} ${{item.price}}</spin>
+				</h2>
+			</div>
+			<p>
+			总价格 {{items.total_cost}}
+			总时长 {{items.total_time}}
+		  	</p>
+		  </a>
+		  
+	  </div>
+
+   </ion-content>
+</ion-view>
+

@@ -77,14 +77,14 @@ angular.module('starter.controllers', [])
 
 
 .controller('map', function($rootScope, $scope, $stateParams, $http, $sce) {
-
 	$scope.map_list_get = function() {
 		window.location.href = "#/app/map_list";
 	}
 })
 
-.controller('map_list', function($rootScope, $scope, $stateParams, $http, $sce) {
+.controller('map_list', function($rootScope, $scope, $stateParams, $http, $sce, MapService) {
 
+	/*
 	$scope.map_list = [
 		{ name: '上海 -- 北京', cost:"101", time:"30h", id: 1 },
 		{ name: '上海 -- 天津', cost:"120", time:"30h", id: 2 },
@@ -93,7 +93,16 @@ angular.module('starter.controllers', [])
 		{ name: '上海 -- 天津', cost:"100", time:"30h", id: 5 },
 		{ name: '上海 -- 北京', cost:"100", time:"30h", id: 6 }
 	];
+	*/
 
+	$scope.map_list = MapService.httpget($http, "", "");
+	console.log($scope.map_list);
+})
+
+.controller('map_detail', function($rootScope, $scope, $stateParams, $http, $sce, MapService) {
+	
+	$scope.map_detail_list = MapService.GetMapDetail($stateParams.id);
+	console.log($scope.map_detail_list);
 })
 
 .controller('control_myitem', function($rootScope, $scope, $stateParams, $http, $sce, SpecialListService, s_im, s_item) {
