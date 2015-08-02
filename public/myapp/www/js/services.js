@@ -333,22 +333,26 @@ angular.module('starter.services', [])
 			return CityList;
 		},
 
+		GetCitys : function() {
+			return _this.GetCity(_this.MapResult['res']);
+		},
+
 		GetMapDetail : function(id) {
 			var _this = this;
 			return _this.MapResult["res"][id]["path"];
 
 		},
 
-		httpget : function($http, StartCity, EndCity, date) {
+		httpget : function($http, StartCity, EndCity, date, cb) {
 			var _this = this;
 
 			//http://xx.xx.xx.xx/get?StartCity=/*&EndCity=/**/*/
 			var rest = encodeURI("/get?StartCity=" + StartCity + "&EndCity=" + EndCity + "&date=" + date);
 
 			//var rest = "http://www.baidu.com"
-
 			$http.get(rest).success(function(data) {
 				console.log(data);
+				cb();
 			});
 
 			return _this.GetCity(_this.MapResult['res']);

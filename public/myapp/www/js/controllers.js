@@ -87,19 +87,26 @@ angular.module('starter.controllers', [])
 
 .controller('map_list', function($rootScope, $scope, $stateParams, $http, $sce, MapService) {
 
-	/*
-	$scope.map_list = [
-		{ name: '上海 -- 北京', cost:"101", time:"30h", id: 1 },
-		{ name: '上海 -- 天津', cost:"120", time:"30h", id: 2 },
-		{ name: '上海 -- 武汉', cost:"105", time:"30h", id: 3 },
-		{ name: '上海 -- 武汉', cost:"300", time:"30h", id: 4 },
-		{ name: '上海 -- 天津', cost:"100", time:"30h", id: 5 },
-		{ name: '上海 -- 北京', cost:"100", time:"30h", id: 6 }
-	];
-	*/
+	if ($rootScope.map == null) {
+		window.location.href = "#/app/map";
+		return;
+	}
 
-	console.log($rootScope.map.date_time);
-	$scope.map_list = MapService.httpget($http, $rootScope.map.start_city, $rootScope.map.end_city, String(new Date($rootScope.map.date_time)));
+	//console.log($rootScope.map.date_time);
+	
+	var map_get_callback = function() {
+		$scope.map_list = MapService.GetCitys();
+	};
+
+	//var map_date = new Date($rootScope.map.date_time);
+	var map_date = $rootScope.map.date_time;
+	var map_date_tmp = map_date.getFullYear() 
+			+ "-" + (map_date.getMonth() + 1 < 10 ? "0" + (map_date.getMonth() + 1) : map_date.getMonth())
+			+ "-" + map_date.getDate();
+
+	console.log(map_date_tmp);
+
+	$scope.map_list = MapService.httpget($http, $rootScope.map.start_city, $rootScope.map.end_city, map_date_tmp, map_get_callback);
 })
 
 .controller('map_detail', function($rootScope, $scope, $stateParams, $http, $sce, MapService) {
