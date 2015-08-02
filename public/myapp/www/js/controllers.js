@@ -80,8 +80,13 @@ angular.module('starter.controllers', [])
 
 	$rootScope.map = {};
 
+	$rootScope.map.date_time = new Date();
+
 	$scope.map_list_get = function() {
-		window.location.href = "#/app/map_list";
+		if ($rootScope.map.start_city != null 
+			&& $rootScope.map.end_city != null) {
+			window.location.href = "#/app/map_list";
+		}
 	}
 })
 
@@ -90,23 +95,24 @@ angular.module('starter.controllers', [])
 	if ($rootScope.map == null) {
 		window.location.href = "#/app/map";
 		return;
+	} else {
+		//console.log($rootScope.map.date_time);
+
+		var map_get_callback = function() {
+			$scope.map_list = MapService.GetCitys();
+		};
+
+		//var map_date = new Date($rootScope.map.date_time);
+		var map_date = $rootScope.map.date_time;
+		var map_date_tmp = map_date.getFullYear() 
+	+ "-" + (map_date.getMonth() + 1 < 10 ? "0" + (map_date.getMonth() + 1) : map_date.getMonth())
+	+ "-" + map_date.getDate();
+
+		console.log(map_date_tmp);
+
+		$scope.map_list = MapService.httpget($http, $rootScope.map.start_city, $rootScope.map.end_city, map_date_tmp, map_get_callback);
 	}
 
-	//console.log($rootScope.map.date_time);
-	
-	var map_get_callback = function() {
-		$scope.map_list = MapService.GetCitys();
-	};
-
-	//var map_date = new Date($rootScope.map.date_time);
-	var map_date = $rootScope.map.date_time;
-	var map_date_tmp = map_date.getFullYear() 
-			+ "-" + (map_date.getMonth() + 1 < 10 ? "0" + (map_date.getMonth() + 1) : map_date.getMonth())
-			+ "-" + map_date.getDate();
-
-	console.log(map_date_tmp);
-
-	$scope.map_list = MapService.httpget($http, $rootScope.map.start_city, $rootScope.map.end_city, map_date_tmp, map_get_callback);
 })
 
 .controller('map_detail', function($rootScope, $scope, $stateParams, $http, $sce, MapService) {
